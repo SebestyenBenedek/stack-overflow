@@ -34,17 +34,26 @@ public class QuestionController {
     }
 
     @PostMapping("/")
-    public void addNewQuestion(@RequestBody NewQuestionDTO question) {
+    public ResponseEntity<Object> addNewQuestion(@RequestBody NewQuestionDTO question) {
         try {
             questionServiceImpl.addNewQuestion(question);
             logger.logInfo("New question successfully added.");
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            System.out.println("New question adding FAILED" + e.getMessage());
+            logger.logError("New question adding FAILED" + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteQuestionById(@PathVariable int id) {
-        return false;
+    public ResponseEntity<Object> deleteQuestionById(@PathVariable int id) {
+        try {
+            questionServiceImpl.deleteQuestionById(id);
+            logger.logInfo("Question successfully deleted.");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            logger.logError("Question delete FAILED" + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
