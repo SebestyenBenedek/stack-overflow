@@ -25,12 +25,22 @@ public class QuestionController {
 
     @GetMapping("/all")
     public ResponseEntity<List<QuestionDTO>> getAllQuestions() {
-        return new ResponseEntity<>(questionServiceImpl.getAllQuestions(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(questionServiceImpl.getAllQuestions(), HttpStatus.OK);
+        } catch (Throwable e) {
+            logger.logError("New question adding FAILED" + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<QuestionDTO>> getQuestionById(@PathVariable int id) {
-        return new ResponseEntity<>(Optional.ofNullable(questionServiceImpl.getQuestionById(id)), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(Optional.ofNullable(questionServiceImpl.getQuestionById(id)), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            logger.logError("New question adding FAILED" + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/")
