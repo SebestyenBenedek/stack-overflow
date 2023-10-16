@@ -13,20 +13,12 @@ import java.util.List;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
-
-    //private String dbFile;
-    //private Logger logger;
     private QuestionRepositoryImpl questionRepositoryImpl;
-    private QuestionsDAO questionsDAO;
+    //private QuestionsDAO questionsDAO;
 
-    @Autowired
+    /*@Autowired
     public QuestionServiceImpl(QuestionsDAO questionsDAO) {
         this.questionsDAO = questionsDAO;
-    }
-
-   /* public QuestionServiceImpl(String dbFile, Logger logger) {
-        this.dbFile = dbFile;
-        this.logger = logger;
     }*/
 
     public List<QuestionDTO> getAllQuestions() {
