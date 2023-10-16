@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.questions.controller;
 
+import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.questions.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.questions.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.questions.service.QuestionServiceImpl;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RequestMapping("/api/questions")
 public class QuestionController {
     private final QuestionServiceImpl questionServiceImpl;
+    private Logger logger;
 
     @Autowired
     public QuestionController(QuestionServiceImpl questionServiceImpl) {
@@ -34,8 +36,8 @@ public class QuestionController {
     @PostMapping("/")
     public void addNewQuestion(@RequestBody NewQuestionDTO question) {
         try {
-            questionService.addNewQuestion(question);
-            System.out.println("New question successfully added.");
+            questionServiceImpl.addNewQuestion(question);
+            logger.logInfo("New question successfully added.");
         } catch (IllegalArgumentException e) {
             System.out.println("New question adding FAILED" + e.getMessage());
         }
