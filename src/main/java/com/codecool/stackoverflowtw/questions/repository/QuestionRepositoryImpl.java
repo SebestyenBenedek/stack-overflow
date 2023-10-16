@@ -83,8 +83,17 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void delete() {
+    public void delete(int id) {
+        String query = "DELETE FROM questions WHERE id = ?";
 
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setInt(1, id);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error deleting question: " + e.getMessage());
+        }
     }
 
     @Override
