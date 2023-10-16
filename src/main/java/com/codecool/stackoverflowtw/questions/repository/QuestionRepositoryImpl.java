@@ -97,7 +97,17 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void add() {
+    public void add(String title, String description) {
+        String query = "INSERT INTO questions(title, description) VALUES(?,?)";
 
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(1, title);
+                preparedStatement.setString(2, description);
+                preparedStatement.setObject(3, LocalDateTime.now());
+            }
+        } catch (SQLException e) {
+            logger.logError("Error adding new question: " + e.getMessage());
+        }
     }
 }
