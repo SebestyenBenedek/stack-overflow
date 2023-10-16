@@ -40,9 +40,8 @@ public class QuestionServiceImpl implements QuestionService {
         return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
     }
 
-    public boolean deleteQuestionById(int id) {
-        // TODO
-        return false;
+    public void deleteQuestionById(int id) {
+        questionRepositoryImpl.delete(id);
     }
 
     public void addNewQuestion(NewQuestionDTO question) {
