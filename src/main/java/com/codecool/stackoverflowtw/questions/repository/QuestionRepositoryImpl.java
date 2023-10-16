@@ -5,6 +5,7 @@ import com.codecool.stackoverflowtw.logger.Logger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,10 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                     int id = resultSet.getInt("id");
                     String title = resultSet.getString("title");
                     String description = resultSet.getString("description");
-                    questionList.add(new QuestionDTO(id, title, description, LocalDateTime.now()));
+                    java.sql.Date sqlDate = Date.valueOf(resultSet.getDate("created").toString().split("T")[0]);
+                    java.sql.Time sqlTime = Time.valueOf(resultSet.getTime("created").toString().split("T")[1]);
+                    LocalDateTime created = LocalDateTime.parse(sqlDate + "T" + sqlTime);
+                    questionList.add(new QuestionDTO(id, title, description, created));
                 }
             }
         } catch (SQLException e) {
@@ -55,8 +59,21 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void get() {
+    public QuestionDTO get(int id) {
+        String query = "SELECT * FROM questions WHERE id = ?";
 
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setInt(1, id);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    String title = resultSet.getString("title");
+                    String description = resultSet.getString("description");
+                    LocalDateTime time = resultSet.getTime("created");
+                }
+            }
+
+        }
     }
 
     @Override
