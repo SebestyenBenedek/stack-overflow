@@ -1,21 +1,19 @@
-package com.codecool.stackoverflowtw.service;
+package com.codecool.stackoverflowtw.questions.service;
 
-import com.codecool.stackoverflowtw.dao.QuestionsDAO;
-import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.questions.dao.QuestionsDAO;
+import com.codecool.stackoverflowtw.questions.controller.dto.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class QuestionService {
+public class QuestionServiceImpl implements QuestionService {
 
     private QuestionsDAO questionsDAO;
 
     @Autowired
-    public QuestionService(QuestionsDAO questionsDAO) {
+    public QuestionServiceImpl(QuestionsDAO questionsDAO) {
         this.questionsDAO = questionsDAO;
     }
 
@@ -26,7 +24,7 @@ public class QuestionService {
 
     public QuestionDTO getQuestionById(int id) {
         // TODO
-        questionsDAO.sayHi();
+        //questionsDAO.sayHi();
         return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
     }
 
@@ -38,6 +36,6 @@ public class QuestionService {
     public int addNewQuestion(NewQuestionDTO question) {
         // TODO
         int createdId = 0;
-        return createdId;
+        return questionsDAO.;
     }
 }
