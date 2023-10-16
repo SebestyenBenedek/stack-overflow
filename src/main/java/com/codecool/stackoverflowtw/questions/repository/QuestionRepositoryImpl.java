@@ -49,6 +49,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                     java.sql.Time sqlTime = Time.valueOf(resultSet.getTime("created").toString().split("T")[1]);
                     LocalDateTime created = LocalDateTime.parse(sqlDate + "T" + sqlTime);
                     questionList.add(new QuestionDTO(id, title, description, created));
+
+                    logger.logInfo("Retrieving all the questions was successfully!");
                 }
             }
         } catch (SQLException e) {
@@ -73,6 +75,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                     java.sql.Time sqlTime = Time.valueOf(resultSet.getTime("created").toString().split("T")[1]);
                     LocalDateTime created = LocalDateTime.parse(sqlDate + "T" + sqlTime);
 
+                    logger.logInfo("Retrieving question was successfully!");
+
                     return new QuestionDTO(id, title, description, created);
                 }
             }
@@ -90,6 +94,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
+
+                logger.logInfo("Question deleted successfully!");
             }
         } catch (SQLException e) {
             logger.logError("Error deleting question: " + e.getMessage());
@@ -105,6 +111,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 preparedStatement.setString(1, title);
                 preparedStatement.setString(2, description);
                 preparedStatement.setObject(3, LocalDateTime.now());
+
+                logger.logInfo("Adding a new question was successfully!");
             }
         } catch (SQLException e) {
             logger.logError("Error adding new question: " + e.getMessage());
