@@ -69,11 +69,17 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 if (resultSet.next()) {
                     String title = resultSet.getString("title");
                     String description = resultSet.getString("description");
-                    LocalDateTime time = resultSet.getTime("created");
+                    java.sql.Date sqlDate = Date.valueOf(resultSet.getDate("created").toString().split("T")[0]);
+                    java.sql.Time sqlTime = Time.valueOf(resultSet.getTime("created").toString().split("T")[1]);
+                    LocalDateTime created = LocalDateTime.parse(sqlDate + "T" + sqlTime);
+
+                    return new QuestionDTO(id, title, description, created);
                 }
             }
-
+        } catch (SQLException e) {
+            logger.logError("Error retrieving question: " + e.getMessage());
         }
+        return null;
     }
 
     @Override
