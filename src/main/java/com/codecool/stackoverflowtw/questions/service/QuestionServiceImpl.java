@@ -35,9 +35,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     public QuestionDTO getQuestionById(int id) {
-        // TODO
-        //questionsDAO.sayHi();
-        return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
+        QuestionDTO questionById = questionRepositoryImpl.get(id);
+        return new QuestionDTO(questionById.id(), questionById.title(), questionById.description(), questionById.created());
     }
 
     public void deleteQuestionById(int id) {
