@@ -1,4 +1,4 @@
-package com.codecool.stackoverflowtw.controller;
+package com.codecool.stackoverflowtw.questions.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
