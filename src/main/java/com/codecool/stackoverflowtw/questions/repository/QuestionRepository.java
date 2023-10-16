@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface QuestionRepository {
     List<QuestionDTO> getAll();
-    QuestionDTO get();
-    void delete();
-    void add();
+    QuestionDTO get(int id);
+    void delete(int id);
+    void add(String title, String description);
 }
