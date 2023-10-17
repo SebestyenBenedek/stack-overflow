@@ -1,0 +1,14 @@
+.page-content {
+    display: flex;
+    padding: 1rem;
+    margin: 1rem;
+    flex-direction: column;
+    /*justify-content: flex-start;
+    align-items: flex-start;*/
+    width: 70vw;
+}
+
+.hr-style {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+}

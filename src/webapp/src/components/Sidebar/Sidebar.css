@@ -1,9 +1,10 @@
-.content {
-    display: flex;
+.sidebar-content {
+    margin: 1rem;
+    padding: 1rem;
+    width: 30vw;
 }
 
 .hr-style {
     margin-top: 0 !important;
     margin-bottom: 1rem !important;
 }
-
