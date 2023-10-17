@@ -41,4 +41,11 @@ public class UserController {
         logger.logInfo("New User successfully added!");
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteUserById(@PathVariable UUID id) {
+        userService.deleteUserById(id);
+        logger.logInfo("User successfully deleted!");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
