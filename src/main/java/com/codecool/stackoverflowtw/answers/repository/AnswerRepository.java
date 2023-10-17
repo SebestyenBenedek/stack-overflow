@@ -8,6 +8,6 @@ public interface AnswerRepository {
     List<Answer> getAll(int id);
     Answer get(int id);
     void delete(int id);
-    void add(String description);
-    void update(int id);
+    void add(String description, int questionId);
+    void update(int id, String description);
 }
