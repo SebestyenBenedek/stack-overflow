@@ -33,7 +33,6 @@ public class UserRepositoryImpl implements UserRepository {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                     ResultSet resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()) {
-                        UUID id = resultSet.getObject("id", java.util.UUID.class);
                         String username = resultSet.getString("username");
                         String password = resultSet.getString("password");
                         String email = resultSet.getString("email");
@@ -58,6 +57,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setObject(1, java.util.UUID.class);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     String username = resultSet.getString("username");
@@ -84,6 +84,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setObject(1, java.util.UUID.class);
                 preparedStatement.executeUpdate();
 
                 logger.logInfo("Question deleted successfully!");
@@ -97,7 +98,21 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void add(String username, String password, String email) {
+        String query = "INSERT INTO users(username, password, email) VALUES(?,?,?)";
 
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, email);
+
+                logger.logInfo("Adding a new User was successfully!");
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error adding new User: " + e.getMessage());
+        }
     }
 
     @Override
