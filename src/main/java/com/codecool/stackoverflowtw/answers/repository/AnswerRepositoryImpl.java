@@ -28,10 +28,11 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     @Override
     public List<Answer> getAll(int questionId) {
         List<Answer> answerList = new ArrayList<>();
-        String query = "SELECT * FROM answers WHERE question = questionId";
+        String query = "SELECT * FROM answers WHERE questionId = ?";
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setInt(1, questionId);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     String description = resultSet.getString("description");
@@ -52,6 +53,26 @@ public class AnswerRepositoryImpl implements AnswerRepository {
 
     @Override
     public Answer get(int id) {
+        String query = "SELECT * FROM answers WHERE id = ?";
+
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setInt(1, id);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    String description = resultSet.getString("description");
+
+                    logger.logInfo("Retrieving answer was successfully!");
+
+                    return new Answer(description);
+                }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error retrieving answer: " + e.getMessage());
+        }
         return null;
     }
 
