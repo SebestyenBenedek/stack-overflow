@@ -33,7 +33,8 @@ public class AnswerRepositoryImpl implements AnswerRepository {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     String description = resultSet.getString("description");
-                    answerList.add(new Answer(description));
+                    int question = resultSet.getInt("questionId");
+                    answerList.add(new Answer(description, question));
 
                     logger.logInfo("Retrieving all the answers for the chosen question!");
                 }
@@ -58,10 +59,11 @@ public class AnswerRepositoryImpl implements AnswerRepository {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     String description = resultSet.getString("description");
+                    int question = resultSet.getInt("questionId");
 
                     logger.logInfo("Retrieving answer was successfully!");
 
-                    return new Answer(description);
+                    return new Answer(description, question);
                 }
                 resultSet.close();
                 preparedStatement.close();
@@ -92,12 +94,38 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     }
 
     @Override
-    public void add(String description) {
+    public void add(String description, int questionId) {
+        String query = "INSERT INTO answers(description, questionId) VALUES(?,?)";
 
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(1, description);
+                preparedStatement.setInt(2, questionId);
+
+                logger.logInfo("Adding a new answer to the chosen question was successfully!");
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error adding new answer: " + e.getMessage());
+        }
     }
 
     @Override
-    public void update(int id) {
+    public void update(int id, String description) {
+        String query = "UPDATE anwers SET description = ? WHERE id = ?";
 
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(1, description);
+                preparedStatement.setInt(2, id);
+
+                logger.logInfo("Updating answer was successfully!");
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error updating answer: " + e.getMessage());
+        }
     }
 }
