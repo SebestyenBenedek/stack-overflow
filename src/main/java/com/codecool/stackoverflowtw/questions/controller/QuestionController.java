@@ -25,25 +25,41 @@ public class QuestionController {
 
     @GetMapping("/all")
     public ResponseEntity<List<QuestionDTO>> getAllQuestions() {
+        try {
             return new ResponseEntity<>(questionServiceImpl.getAllQuestions(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<QuestionDTO>> getQuestionById(@PathVariable int id) {
+        try {
             return new ResponseEntity<>(Optional.ofNullable(questionServiceImpl.getQuestionById(id)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @PostMapping("/")
     public ResponseEntity<Object> addNewQuestion(@RequestBody NewQuestionDTO question) {
+        try {
             questionServiceImpl.addNewQuestion(question);
             logger.logInfo("New question successfully added.");
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteQuestionById(@PathVariable int id) {
+        try {
             questionServiceImpl.deleteQuestionById(id);
             logger.logInfo("Question successfully deleted.");
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 }
