@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addNewUser(NewUserDTO userDTO) {
-
+        userRepository.add(userDTO.username(), userDTO.password(), userDTO.email());
     }
 
     @Override
