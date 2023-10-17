@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.questions.repository;
 
+import com.codecool.stackoverflowtw.database.service.ConnectDatabaseImpl;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.questions.model.Question;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class QuestionRepositoryImpl implements QuestionRepository {
     private final String dbFile;
     private final Logger logger;
+    private ConnectDatabaseImpl connectDatabase;
 
     public QuestionRepositoryImpl(String dbFile, Logger logger) {
         this.dbFile = dbFile;
@@ -18,18 +20,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     private Connection getConnection() {
-        Connection conn = null;
-
-        try {
-            String url = "jdbc:sqlite:" + dbFile;
-            conn = DriverManager.getConnection(url);
-
-            logger.logInfo("Connection to SQLite has been established.");
-        } catch (SQLException e) {
-            logger.logError("Error while connecting to SQLite: " + e.getMessage());
-        }
-
-        return conn;
+        return connectDatabase.getConnection(dbFile, logger);
     }
 
     @Override
@@ -41,16 +32,15 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
                     String title = resultSet.getString("title");
                     String description = resultSet.getString("description");
-                    java.sql.Date sqlDate = Date.valueOf(resultSet.getDate("created").toString().split("T")[0]);
-                    java.sql.Time sqlTime = Time.valueOf(resultSet.getTime("created").toString().split("T")[1]);
-                    LocalDateTime created = LocalDateTime.parse(sqlDate + "T" + sqlTime);
                     questionList.add(new Question(title, description));
 
                     logger.logInfo("Retrieving all the questions was successfully!");
                 }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
             }
         } catch (SQLException e) {
             logger.logError("Error retrieving all questions: " + e.getMessage());
@@ -70,14 +60,14 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 if (resultSet.next()) {
                     String title = resultSet.getString("title");
                     String description = resultSet.getString("description");
-                    java.sql.Date sqlDate = Date.valueOf(resultSet.getDate("created").toString().split("T")[0]);
-                    java.sql.Time sqlTime = Time.valueOf(resultSet.getTime("created").toString().split("T")[1]);
-                    LocalDateTime created = LocalDateTime.parse(sqlDate + "T" + sqlTime);
 
                     logger.logInfo("Retrieving question was successfully!");
 
                     return new Question(title, description);
                 }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
             }
         } catch (SQLException e) {
             logger.logError("Error retrieving question: " + e.getMessage());
@@ -95,6 +85,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 preparedStatement.executeUpdate();
 
                 logger.logInfo("Question deleted successfully!");
+                preparedStatement.close();
+                conn.close();
             }
         } catch (SQLException e) {
             logger.logError("Error deleting question: " + e.getMessage());
@@ -109,9 +101,10 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setString(1, title);
                 preparedStatement.setString(2, description);
-                preparedStatement.setObject(3, LocalDateTime.now());
 
                 logger.logInfo("Adding a new question was successfully!");
+                preparedStatement.close();
+                conn.close();
             }
         } catch (SQLException e) {
             logger.logError("Error adding new question: " + e.getMessage());

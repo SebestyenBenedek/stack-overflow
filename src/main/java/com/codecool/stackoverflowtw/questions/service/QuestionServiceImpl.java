@@ -19,6 +19,7 @@ public class QuestionServiceImpl implements QuestionService {
         this.questionsDAO = questionsDAO;
     }*/
 
+    @Override
     public List<QuestionDTO> getAllQuestions() {
         List<Question> questions = questionRepositoryImpl.getAll();
         List<QuestionDTO> questionDTOS = new ArrayList<>();
@@ -28,12 +29,16 @@ public class QuestionServiceImpl implements QuestionService {
                     question.getId(),
                     question.getTitle(),
                     question.getDescription(),
-                    question.getCreated()));
+                    question.getCreated(),
+                    question.getTags(),
+                    question.getNumberOfAnswer(),
+                    question.getNumberOfViews()));
         }
 
         return questionDTOS;
     }
 
+    @Override
     public QuestionDTO getQuestionById(int id) {
         Question question = questionRepositoryImpl.get(id);
 
@@ -41,13 +46,18 @@ public class QuestionServiceImpl implements QuestionService {
                 question.getId(),
                 question.getTitle(),
                 question.getDescription(),
-                question.getCreated());
+                question.getCreated(),
+                question.getTags(),
+                question.getNumberOfAnswer(),
+                question.getNumberOfViews());
     }
 
+    @Override
     public void deleteQuestionById(int id) {
         questionRepositoryImpl.delete(id);
     }
 
+    @Override
     public void addNewQuestion(NewQuestionDTO question) {
         questionRepositoryImpl.add(question.title(), question.description());
     }
