@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 public class Question {
     private int counter;
 
-    private int id;
+    private final int id;
     private String title;
     private String description;
-    private LocalDateTime created;
+    private final LocalDateTime created;
 
     public Question(String title, String description) {
         this.id = ++counter;
