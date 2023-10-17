@@ -1,14 +1,12 @@
 package com.codecool.stackoverflowtw.questions.service;
 
-import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.questions.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.questions.dao.QuestionsDAO;
 import com.codecool.stackoverflowtw.questions.controller.dto.QuestionDTO;
-import com.codecool.stackoverflowtw.questions.repository.QuestionRepository;
+import com.codecool.stackoverflowtw.questions.model.Question;
 import com.codecool.stackoverflowtw.questions.repository.QuestionRepositoryImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,11 +20,28 @@ public class QuestionServiceImpl implements QuestionService {
     }*/
 
     public List<QuestionDTO> getAllQuestions() {
-        return questionRepositoryImpl.getAll();
+        List<Question> questions = questionRepositoryImpl.getAll();
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+
+        for (Question question : questions) {
+            questionDTOS.add(new QuestionDTO(
+                    question.getId(),
+                    question.getTitle(),
+                    question.getDescription(),
+                    question.getCreated()));
+        }
+
+        return questionDTOS;
     }
 
     public QuestionDTO getQuestionById(int id) {
-        return questionRepositoryImpl.get(id);
+        Question question = questionRepositoryImpl.get(id);
+
+        return new QuestionDTO(
+                question.getId(),
+                question.getTitle(),
+                question.getDescription(),
+                question.getCreated());
     }
 
     public void deleteQuestionById(int id) {
