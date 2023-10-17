@@ -32,16 +32,15 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
-                    int id = resultSet.getInt("id");
                     String title = resultSet.getString("title");
                     String description = resultSet.getString("description");
-                    java.sql.Date sqlDate = Date.valueOf(resultSet.getDate("created").toString().split("T")[0]);
-                    java.sql.Time sqlTime = Time.valueOf(resultSet.getTime("created").toString().split("T")[1]);
-                    LocalDateTime created = LocalDateTime.parse(sqlDate + "T" + sqlTime);
                     questionList.add(new Question(title, description));
 
                     logger.logInfo("Retrieving all the questions was successfully!");
                 }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
             }
         } catch (SQLException e) {
             logger.logError("Error retrieving all questions: " + e.getMessage());
@@ -61,14 +60,14 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 if (resultSet.next()) {
                     String title = resultSet.getString("title");
                     String description = resultSet.getString("description");
-                    java.sql.Date sqlDate = Date.valueOf(resultSet.getDate("created").toString().split("T")[0]);
-                    java.sql.Time sqlTime = Time.valueOf(resultSet.getTime("created").toString().split("T")[1]);
-                    LocalDateTime created = LocalDateTime.parse(sqlDate + "T" + sqlTime);
 
                     logger.logInfo("Retrieving question was successfully!");
 
                     return new Question(title, description);
                 }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
             }
         } catch (SQLException e) {
             logger.logError("Error retrieving question: " + e.getMessage());
@@ -86,6 +85,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 preparedStatement.executeUpdate();
 
                 logger.logInfo("Question deleted successfully!");
+                preparedStatement.close();
+                conn.close();
             }
         } catch (SQLException e) {
             logger.logError("Error deleting question: " + e.getMessage());
@@ -103,6 +104,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 preparedStatement.setObject(3, LocalDateTime.now());
 
                 logger.logInfo("Adding a new question was successfully!");
+                preparedStatement.close();
+                conn.close();
             }
         } catch (SQLException e) {
             logger.logError("Error adding new question: " + e.getMessage());
