@@ -48,4 +48,11 @@ public class UserController {
         logger.logInfo("User successfully deleted!");
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateUserById(@PathVariable UUID id, @RequestBody UserDTO user) {
+        userService.updateUserById(id, user);
+        logger.logInfo("User successfully updated!");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
