@@ -5,8 +5,8 @@ import com.codecool.stackoverflowtw.database.service.ConnectDatabaseImpl;
 import com.codecool.stackoverflowtw.logger.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AnswerRepositoryImpl implements AnswerRepository {
     private final String dbFile;
@@ -23,8 +23,8 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     }
 
     @Override
-    public List<Answer> getAll(int questionId) {
-        List<Answer> answerList = new ArrayList<>();
+    public Set<Answer> getAll(int questionId) {
+        Set<Answer> answerList = new HashSet<>();
         String query = "SELECT * FROM answers WHERE questionId = ?";
 
         try (Connection conn = getConnection()) {
