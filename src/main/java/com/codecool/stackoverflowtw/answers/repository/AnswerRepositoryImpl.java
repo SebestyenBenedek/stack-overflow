@@ -4,10 +4,7 @@ import com.codecool.stackoverflowtw.answers.model.Answer;
 import com.codecool.stackoverflowtw.database.service.ConnectDatabaseImpl;
 import com.codecool.stackoverflowtw.logger.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +75,20 @@ public class AnswerRepositoryImpl implements AnswerRepository {
 
     @Override
     public void delete(int id) {
+        String query = "DELETE FROM answers WHERE id = ?";
 
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setInt(1, id);
+                preparedStatement.executeUpdate();
+
+                logger.logInfo("Answer deleted successfully!");
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error deleting answer: " + e.getMessage());
+        }
     }
 
     @Override
