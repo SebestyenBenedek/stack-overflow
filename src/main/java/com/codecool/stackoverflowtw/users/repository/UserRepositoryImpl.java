@@ -7,7 +7,6 @@ import com.codecool.stackoverflowtw.users.model.User;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public class UserRepositoryImpl implements UserRepository {
     private final String dbFile;
@@ -52,12 +51,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User get(UUID id) {
+    public User get(int id) {
         String query = "SELECT * FROM users WHERE id = ?";
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setObject(1, java.util.UUID.class);
+                preparedStatement.setObject(1, id);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     String username = resultSet.getString("username");
@@ -79,12 +78,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(int id) {
         String query = "DELETE FROM users WHERE id = ?";
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setObject(1, java.util.UUID.class);
+                preparedStatement.setObject(1, id);
                 preparedStatement.executeUpdate();
 
                 logger.logInfo("Question deleted successfully!");
@@ -116,7 +115,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void update(UUID id, String username, String password, String email) {
+    public void update(int id, String username, String password, String email) {
         String query = "UPDATE users SET username = ?, password = ?, email = ? WHERE id = ?";
 
         try (Connection conn = getConnection()) {

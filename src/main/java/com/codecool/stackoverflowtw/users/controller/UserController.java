@@ -9,10 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -31,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<UserDTO>> getUserById(@PathVariable UUID id) {
+    public ResponseEntity<Optional<UserDTO>> getUserById(@PathVariable int id) {
         return new ResponseEntity<>(Optional.ofNullable(userService.getUserById(id)), HttpStatus.OK);
     }
 
@@ -43,14 +41,14 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUserById(@PathVariable UUID id) {
+    public ResponseEntity<Object> deleteUserById(@PathVariable int id) {
         userService.deleteUserById(id);
         logger.logInfo("User successfully deleted!");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUserById(@PathVariable UUID id, @RequestBody UserDTO user) {
+    public ResponseEntity<Object> updateUserById(@PathVariable int id, @RequestBody UserDTO user) {
         userService.updateUserById(id, user);
         logger.logInfo("User successfully updated!");
         return new ResponseEntity<>(HttpStatus.OK);

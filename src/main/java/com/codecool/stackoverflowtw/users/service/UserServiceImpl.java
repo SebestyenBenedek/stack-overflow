@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -37,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserById(UUID id) {
+    public UserDTO getUserById(int id) {
         User user = userRepository.get(id);
 
         return new UserDTO(
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(UUID id) {
+    public void deleteUserById(int id) {
         userRepository.delete(id);
     }
 
@@ -58,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserById(UUID id, UserDTO userDTO) {
+    public void updateUserById(int id, UserDTO userDTO) {
         userRepository.update(id, userDTO.username(), userDTO.password(), userDTO.email());
     }
 }
