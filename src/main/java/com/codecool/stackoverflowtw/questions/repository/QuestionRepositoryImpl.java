@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.questions.repository;
 
+import com.codecool.stackoverflowtw.database.service.ConnectDatabaseImpl;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.questions.model.Question;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class QuestionRepositoryImpl implements QuestionRepository {
     private final String dbFile;
     private final Logger logger;
+    private ConnectDatabaseImpl connectDatabase;
 
     public QuestionRepositoryImpl(String dbFile, Logger logger) {
         this.dbFile = dbFile;
@@ -18,18 +20,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     private Connection getConnection() {
-        Connection conn = null;
-
-        try {
-            String url = "jdbc:sqlite:" + dbFile;
-            conn = DriverManager.getConnection(url);
-
-            logger.logInfo("Connection to SQLite has been established.");
-        } catch (SQLException e) {
-            logger.logError("Error while connecting to SQLite: " + e.getMessage());
-        }
-
-        return conn;
+        return connectDatabase.getConnection(dbFile, logger);
     }
 
     @Override
