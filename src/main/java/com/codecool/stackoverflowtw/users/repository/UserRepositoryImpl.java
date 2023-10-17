@@ -101,9 +101,9 @@ public class UserRepositoryImpl implements UserRepository {
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setString(2, username);
-                preparedStatement.setString(3, password);
-                preparedStatement.setString(4, email);
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, email);
 
                 logger.logInfo("Adding a new User was successfully!");
                 preparedStatement.close();
@@ -120,9 +120,10 @@ public class UserRepositoryImpl implements UserRepository {
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setString(2, username);
-                preparedStatement.setString(3, password);
-                preparedStatement.setString(4, email);
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, email);
+                preparedStatement.setInt(4, id);
 
                 logger.logInfo("Updating User was successfully!");
                 preparedStatement.close();
