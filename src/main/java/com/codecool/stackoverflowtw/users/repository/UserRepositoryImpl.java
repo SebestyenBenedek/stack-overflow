@@ -102,9 +102,9 @@ public class UserRepositoryImpl implements UserRepository {
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
-                preparedStatement.setString(3, email);
+                preparedStatement.setString(2, username);
+                preparedStatement.setString(3, password);
+                preparedStatement.setString(4, email);
 
                 logger.logInfo("Adding a new User was successfully!");
                 preparedStatement.close();
@@ -117,6 +117,20 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void update(UUID id, String username, String password, String email) {
+        String query = "UPDATE users SET username = ?, password = ?, email = ? WHERE id = ?";
 
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(2, username);
+                preparedStatement.setString(3, password);
+                preparedStatement.setString(4, email);
+
+                logger.logInfo("Updating User was successfully!");
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error updating User: " + e.getMessage());
+        }
     }
 }
