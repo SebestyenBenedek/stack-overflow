@@ -80,7 +80,19 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void delete(UUID id) {
+        String query = "DELETE FROM users WHERE id = ?";
 
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.executeUpdate();
+
+                logger.logInfo("Question deleted successfully!");
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error deleting question: " + e.getMessage());
+        }
     }
 
     @Override
