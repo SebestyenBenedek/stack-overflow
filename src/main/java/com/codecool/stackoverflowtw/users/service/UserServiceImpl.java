@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserById(UUID id) {
-
+    public void updateUserById(UserDTO userDTO) {
+        userRepository.update(userDTO.id(), userDTO.username(), userDTO.password(), userDTO.email());
     }
 }

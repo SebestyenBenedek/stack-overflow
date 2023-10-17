@@ -12,5 +12,5 @@ public interface UserService {
     UserDTO getUserById(UUID id);
     void deleteUserById(UUID id);
     void addNewUser(NewUserDTO userDTO);
-    void updateUserById(UUID id);
+    void updateUserById(UserDTO userDTO);
 }
