@@ -10,4 +10,5 @@ public interface AnswerService {
     AnswerDTO getAnswerById(int id);
     void deleteAnswerById(int id);
     void addNewAnswer(NewAnswerDTO answer);
+    void updateAnswerById(int id, AnswerDTO answerDTO);
 }
