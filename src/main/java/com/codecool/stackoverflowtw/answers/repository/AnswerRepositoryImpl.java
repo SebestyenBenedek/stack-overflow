@@ -27,7 +27,27 @@ public class AnswerRepositoryImpl implements AnswerRepository {
 
     @Override
     public List<Answer> getAll(int questionId) {
-        return null;
+        List<Answer> answerList = new ArrayList<>();
+        String query = "SELECT * FROM answers WHERE question = questionId";
+
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    String description = resultSet.getString("description");
+                    answerList.add(new Answer(description));
+
+                    logger.logInfo("Retrieving all the answers for the chosen question!");
+                }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error retrieving all the answers for the chosen question!" + e.getMessage());
+        }
+
+        return answerList;
     }
 
     @Override
