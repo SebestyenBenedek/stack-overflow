@@ -1,11 +1,12 @@
 package com.codecool.stackoverflowtw.questions.repository;
 
-import com.codecool.stackoverflowtw.questions.controller.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.questions.model.Question;
+
 import java.util.List;
 
 public interface QuestionRepository {
-    List<QuestionDTO> getAll();
-    QuestionDTO get(int id);
+    List<Question> getAll();
+    Question get(int id);
     void delete(int id);
     void add(String title, String description);
 }
