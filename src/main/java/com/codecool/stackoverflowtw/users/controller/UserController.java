@@ -29,4 +29,8 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<UserDTO>> getUserById(@PathVariable UUID id) {
+        return new ResponseEntity<>(Optional.ofNullable(userService.getUserById(id)), HttpStatus.OK);
+    }
 }
