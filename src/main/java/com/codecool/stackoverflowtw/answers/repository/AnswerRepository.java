@@ -2,10 +2,10 @@ package com.codecool.stackoverflowtw.answers.repository;
 
 import com.codecool.stackoverflowtw.answers.model.Answer;
 
-import java.util.List;
+import java.util.Set;
 
 public interface AnswerRepository {
-    List<Answer> getAll(int id);
+    Set<Answer> getAll(int id);
     Answer get(int id);
     void delete(int id);
     void add(String description, int questionId);
