@@ -1,11 +1,10 @@
 package com.codecool.stackoverflowtw.questions.repository;
 
-import com.codecool.stackoverflowtw.questions.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.logger.Logger;
+import com.codecool.stackoverflowtw.questions.model.Question;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +33,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public List<QuestionDTO> getAll() {
-        List<QuestionDTO> questionList = new ArrayList<>();
+    public List<Question> getAll() {
+        List<Question> questionList = new ArrayList<>();
         String query = "SELECT * FROM questions";
 
         try (Connection conn = getConnection()) {
@@ -48,7 +47,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                     java.sql.Date sqlDate = Date.valueOf(resultSet.getDate("created").toString().split("T")[0]);
                     java.sql.Time sqlTime = Time.valueOf(resultSet.getTime("created").toString().split("T")[1]);
                     LocalDateTime created = LocalDateTime.parse(sqlDate + "T" + sqlTime);
-                    questionList.add(new QuestionDTO(id, title, description, created));
+                    questionList.add(new Question(title, description));
 
                     logger.logInfo("Retrieving all the questions was successfully!");
                 }
@@ -61,7 +60,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public QuestionDTO get(int id) {
+    public Question get(int id) {
         String query = "SELECT * FROM questions WHERE id = ?";
 
         try (Connection conn = getConnection()) {
@@ -77,7 +76,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
                     logger.logInfo("Retrieving question was successfully!");
 
-                    return new QuestionDTO(id, title, description, created);
+                    return new Question(title, description);
                 }
             }
         } catch (SQLException e) {
