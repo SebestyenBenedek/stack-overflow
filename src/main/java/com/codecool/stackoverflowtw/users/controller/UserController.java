@@ -1,6 +1,7 @@
 package com.codecool.stackoverflowtw.users.controller;
 
 import com.codecool.stackoverflowtw.logger.Logger;
+import com.codecool.stackoverflowtw.users.controller.dto.NewUserDTO;
 import com.codecool.stackoverflowtw.users.controller.dto.UserDTO;
 import com.codecool.stackoverflowtw.users.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,12 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Optional<UserDTO>> getUserById(@PathVariable UUID id) {
         return new ResponseEntity<>(Optional.ofNullable(userService.getUserById(id)), HttpStatus.OK);
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<Object> addNewUser(@RequestBody NewUserDTO user) {
+        userService.addNewUser(user);
+        logger.logInfo("New User successfully added!");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
