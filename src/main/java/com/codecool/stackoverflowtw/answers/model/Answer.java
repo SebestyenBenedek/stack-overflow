@@ -20,4 +20,28 @@ public class Answer {
         this.numberOfLike = 0;
         this.numberOfDislike = 0;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public int getNumberOfLike() {
+        return numberOfLike;
+    }
+
+    public int getNumberOfDislike() {
+        return numberOfDislike;
+    }
 }
