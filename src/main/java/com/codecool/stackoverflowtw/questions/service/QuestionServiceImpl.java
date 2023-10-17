@@ -29,7 +29,10 @@ public class QuestionServiceImpl implements QuestionService {
                     question.getId(),
                     question.getTitle(),
                     question.getDescription(),
-                    question.getCreated()));
+                    question.getCreated(),
+                    question.getTags(),
+                    question.getNumberOfAnswer(),
+                    question.getNumberOfViews()));
         }
 
         return questionDTOS;
@@ -43,7 +46,10 @@ public class QuestionServiceImpl implements QuestionService {
                 question.getId(),
                 question.getTitle(),
                 question.getDescription(),
-                question.getCreated());
+                question.getCreated(),
+                question.getTags(),
+                question.getNumberOfAnswer(),
+                question.getNumberOfViews());
     }
 
     @Override
