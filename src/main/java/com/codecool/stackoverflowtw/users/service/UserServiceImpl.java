@@ -33,8 +33,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(UUID id) {
-        return null;
+    public UserDTO getUserById(UUID id) {
+        User user = userRepository.get(id);
+
+        return new UserDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                user.getEmail());
     }
 
     @Override
