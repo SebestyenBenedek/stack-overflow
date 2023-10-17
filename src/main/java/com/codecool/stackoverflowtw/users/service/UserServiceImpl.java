@@ -4,17 +4,21 @@ import com.codecool.stackoverflowtw.users.controller.dto.NewUserDTO;
 import com.codecool.stackoverflowtw.users.controller.dto.UserDTO;
 import com.codecool.stackoverflowtw.users.model.User;
 import com.codecool.stackoverflowtw.users.repository.UserRepositoryImpl;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Service
 public class UserServiceImpl implements UserService {
     private UserRepositoryImpl userRepository;
 
+/*
     public UserServiceImpl(UserRepositoryImpl userRepository) {
         this.userRepository = userRepository;
     }
+*/
 
     @Override
     public Set<UserDTO> getAllUsers() {
