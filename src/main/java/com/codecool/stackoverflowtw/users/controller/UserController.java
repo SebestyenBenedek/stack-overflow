@@ -25,32 +25,52 @@ public class UserController {
 
     @GetMapping("/all")
     public ResponseEntity<Set<UserDTO>> getAllUsers() {
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<UserDTO>> getUserById(@PathVariable int id) {
-        return new ResponseEntity<>(Optional.ofNullable(userService.getUserById(id)), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(Optional.ofNullable(userService.getUserById(id)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @PostMapping("/")
     public ResponseEntity<Object> addNewUser(@RequestBody NewUserDTO user) {
-        userService.addNewUser(user);
-        logger.logInfo("New User successfully added!");
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            userService.addNewUser(user);
+            logger.logInfo("New User successfully added!");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUserById(@PathVariable int id) {
-        userService.deleteUserById(id);
-        logger.logInfo("User successfully deleted!");
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            userService.deleteUserById(id);
+            logger.logInfo("User successfully deleted!");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUserById(@PathVariable int id, @RequestBody UserDTO user) {
-        userService.updateUserById(id, user);
-        logger.logInfo("User successfully updated!");
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            userService.updateUserById(id, user);
+            logger.logInfo("User successfully updated!");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 }
