@@ -99,9 +99,8 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setString(2, title);
-                preparedStatement.setString(3, description);
-                preparedStatement.setObject(4, LocalDateTime.now());
+                preparedStatement.setString(1, title);
+                preparedStatement.setString(2, description);
 
                 logger.logInfo("Adding a new question was successfully!");
                 preparedStatement.close();
