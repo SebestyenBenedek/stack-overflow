@@ -4,9 +4,8 @@ import com.codecool.stackoverflowtw.database.service.ConnectDatabaseImpl;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.users.model.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -27,7 +26,30 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Set<User> getAll() {
-        return null;
+        Set<User> users = new HashSet<>();
+        String query = "SELECT * FROM users";
+
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        UUID id = resultSet.getObject("id", java.util.UUID.class);
+                        String username = resultSet.getString("username");
+                        String password = resultSet.getString("password");
+                        String email = resultSet.getString("email");
+                        users.add(new User(username, password, email));
+
+                        logger.logInfo("Retrieving all the Users was successfully!");
+                    }
+                    resultSet.close();
+                    preparedStatement.close();
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                logger.logError("Error retrieving all the Users " + e.getMessage());
+            }
+
+        return users;
     }
 
     @Override
