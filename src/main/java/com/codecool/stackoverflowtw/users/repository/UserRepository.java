@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface UserRepository {
     Set<User> getAll();
-    User get();
+    User get(UUID id);
     void delete(UUID id);
     void add(String username, String password, String email);
     void update(UUID id, String username, String password, String email);

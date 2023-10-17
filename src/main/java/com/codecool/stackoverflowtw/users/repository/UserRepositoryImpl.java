@@ -53,7 +53,28 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User get() {
+    public User get(UUID id) {
+        String query = "SELECT * FROM users WHERE id = ?";
+
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    String email = resultSet.getString("email");
+
+                    logger.logInfo("Retrieving Uer was successfully!");
+
+                    return new User(username, password, email);
+                }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error retrieving question: " + e.getMessage());
+        }
         return null;
     }
 
