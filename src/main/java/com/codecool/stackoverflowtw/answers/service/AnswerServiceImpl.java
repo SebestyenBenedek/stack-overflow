@@ -53,4 +53,9 @@ public class AnswerServiceImpl implements AnswerService {
     public void addNewAnswer(NewAnswerDTO answer) {
         answerRepository.add(answer.description(), answer.questionId());
     }
+
+    @Override
+    public void updateAnswerById(int id, AnswerDTO answerDTO) {
+        answerRepository.update(id, answerDTO.description());
+    }
 }
