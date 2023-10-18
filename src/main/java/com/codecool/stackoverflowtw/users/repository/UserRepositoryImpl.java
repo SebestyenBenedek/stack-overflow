@@ -9,17 +9,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UserRepositoryImpl implements UserRepository {
-    private final String dbFile;
+    private final String connectionString;
     private final Logger logger;
     private ConnectDatabaseImpl connectDatabase;
 
-    public UserRepositoryImpl(String dbFile, Logger logger) {
-        this.dbFile = dbFile;
+    public UserRepositoryImpl(String connectionString, Logger logger, ConnectDatabaseImpl connectDatabase) {
+        this.connectionString = connectionString;
         this.logger = logger;
+        this.connectDatabase = connectDatabase;
     }
 
     private Connection getConnection() {
-        return connectDatabase.getConnection(dbFile, logger);
+        return connectDatabase.getConnection(connectionString, logger);
     }
 
 
@@ -32,10 +33,12 @@ public class UserRepositoryImpl implements UserRepository {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                     ResultSet resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()) {
+                        int id = resultSet.getInt("id");
                         String username = resultSet.getString("username");
                         String password = resultSet.getString("password");
                         String email = resultSet.getString("email");
-                        users.add(new User(username, password, email));
+
+                        users.add(new User(id, username, password, email));
 
                         logger.logInfo("Retrieving all the Users was successfully!");
                     }
@@ -59,13 +62,14 @@ public class UserRepositoryImpl implements UserRepository {
                 preparedStatement.setObject(1, id);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
+                    int userId = resultSet.getInt("id");
                     String username = resultSet.getString("username");
                     String password = resultSet.getString("password");
                     String email = resultSet.getString("email");
 
                     logger.logInfo("Retrieving Uer was successfully!");
 
-                    return new User(username, password, email);
+                    return new User(userId, username, password, email);
                 }
                 resultSet.close();
                 preparedStatement.close();
