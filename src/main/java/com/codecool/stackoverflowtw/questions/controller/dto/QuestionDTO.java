@@ -6,4 +6,4 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public record QuestionDTO(int id, String title, String description, LocalDateTime created,
-                          Set<Tag> tagSet, int numberOfAnswer, int numberOfViews) {}
+                          int numberOfAnswer, int numberOfViews, int userId, int tagId) {}

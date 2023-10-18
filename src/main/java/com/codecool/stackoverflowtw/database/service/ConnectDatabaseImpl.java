@@ -7,11 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectDatabaseImpl implements ConnectDatabase {
-    public Connection getConnection(String dbFile, Logger logger) {
+    public Connection getConnection(String connectionString, Logger logger) {
         Connection conn = null;
 
         try {
-            String url = "jdbc:sqlite:" + dbFile;
+            String url = "jdbc:sqlite:" + connectionString;
             conn = DriverManager.getConnection(url);
 
             logger.logInfo("Connection to SQLite has been established.");

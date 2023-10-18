@@ -10,17 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionRepositoryImpl implements QuestionRepository {
-    private final String dbFile;
+    private final String connectionString;
     private final Logger logger;
     private ConnectDatabaseImpl connectDatabase;
 
-    public QuestionRepositoryImpl(String dbFile, Logger logger) {
-        this.dbFile = dbFile;
+    public QuestionRepositoryImpl(String connectionString, Logger logger, ConnectDatabaseImpl connectDatabase) {
+        this.connectionString = connectionString;
         this.logger = logger;
+        this.connectDatabase = connectDatabase;
     }
 
     private Connection getConnection() {
-        return connectDatabase.getConnection(dbFile, logger);
+        return connectDatabase.getConnection(connectionString, logger);
     }
 
     @Override
@@ -32,9 +33,16 @@ public class QuestionRepositoryImpl implements QuestionRepository {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
                     String title = resultSet.getString("title");
                     String description = resultSet.getString("description");
-                    questionList.add(new Question(title, description));
+                    LocalDateTime createdAt = resultSet.getTimestamp("createdAt").toLocalDateTime();
+                    int numberOfLikes = resultSet.getInt("numberOfLikes");
+                    int numberOfDislikes = resultSet.getInt("numberOfDislikes");
+                    int userId = resultSet.getInt("userId");
+                    int tagId = resultSet.getInt("tagId");
+
+                    questionList.add(new Question(id, title, description, createdAt, numberOfLikes, numberOfDislikes, userId, tagId));
 
                     logger.logInfo("Retrieving all the questions was successfully!");
                 }
@@ -50,20 +58,26 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public Question get(int id) {
+    public Question get(int questionId) {
         String query = "SELECT * FROM questions WHERE id = ?";
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setInt(1, id);
+                preparedStatement.setInt(1, questionId);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
                     String title = resultSet.getString("title");
                     String description = resultSet.getString("description");
+                    LocalDateTime createdAt = resultSet.getTimestamp("createdAt").toLocalDateTime();
+                    int numberOfAnswers = resultSet.getInt("numberOfAnswers");
+                    int numberOfViews = resultSet.getInt("numberOfViews");
+                    int user = resultSet.getInt("userId");
+                    int tag = resultSet.getInt("tagId");
 
                     logger.logInfo("Retrieving question was successfully!");
 
-                    return new Question(title, description);
+                    return new Question(id, title, description, createdAt, numberOfAnswers, numberOfViews, user, tag);
                 }
                 resultSet.close();
                 preparedStatement.close();
@@ -94,13 +108,18 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void add(String title, String description) {
-        String query = "INSERT INTO questions(title, description) VALUES(?,?)";
+    public void add(String title, String description, LocalDateTime createdAt, int numberOfLikes, int numberOfViews, int userId, int tagId) {
+        String query = "INSERT INTO questions(title, description, createdAt, numberOfLikes, numberOfViews, userId, tagId) VALUES(?,?,?,?,?,?,?)";
 
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setString(1, title);
                 preparedStatement.setString(2, description);
+                preparedStatement.setTimestamp(3, Timestamp.valueOf(createdAt));
+                preparedStatement.setInt(4, numberOfLikes);
+                preparedStatement.setInt(5, numberOfViews);
+                preparedStatement.setInt(6, userId);
+                preparedStatement.setInt(7, tagId);
 
                 logger.logInfo("Adding a new question was successfully!");
                 preparedStatement.close();

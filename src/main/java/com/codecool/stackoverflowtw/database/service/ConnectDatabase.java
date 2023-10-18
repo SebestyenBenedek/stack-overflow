@@ -5,5 +5,5 @@ import com.codecool.stackoverflowtw.logger.Logger;
 import java.sql.Connection;
 
 public interface ConnectDatabase {
-    public Connection getConnection(String dbFile, Logger logger);
+    public Connection getConnection(String connectionString, Logger logger);
 }

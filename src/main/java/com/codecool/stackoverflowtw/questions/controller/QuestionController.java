@@ -3,7 +3,7 @@ package com.codecool.stackoverflowtw.questions.controller;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.questions.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.questions.controller.dto.QuestionDTO;
-import com.codecool.stackoverflowtw.questions.service.QuestionServiceImpl;
+import com.codecool.stackoverflowtw.questions.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -15,12 +15,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/questions")
 public class QuestionController {
-    private final QuestionServiceImpl questionServiceImpl;
-    private Logger logger;
+    private final QuestionService questionServiceImpl;
+    private final Logger logger;
 
     @Autowired
-    public QuestionController(QuestionServiceImpl questionServiceImpl) {
+    public QuestionController(QuestionService questionServiceImpl, Logger logger) {
         this.questionServiceImpl = questionServiceImpl;
+        this.logger = logger;
     }
 
     @GetMapping("/all")

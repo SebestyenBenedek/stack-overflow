@@ -1,14 +1,13 @@
 package com.codecool.stackoverflowtw.users.model;
 
 public class User {
-    private int counter;
     private final int id;
     private String username;
     private String password;
     private final String email;
 
-    public User(String username, String password, String email) {
-        this.id = ++counter;
+    public User(int id, String username, String password, String email) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;

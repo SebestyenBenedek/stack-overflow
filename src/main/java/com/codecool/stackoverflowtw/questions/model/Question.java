@@ -7,24 +7,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Question {
-    private int counter;
-
     private final int id;
     private String title;
     private String description;
-    private final LocalDateTime created;
-    private Set<Tag> tags;
-    private int numberOfAnswer;
+    private final LocalDateTime createdAt;
+    private int numberOfAnswers;
     private int numberOfViews;
+    private final int userId;
+    private final int tagId;
 
-    public Question(String title, String description) {
-        this.id = ++counter;
+    public Question(int id, String title, String description, LocalDateTime createdAt, int numberOfAnswers, int numberOfViews, int userId, int tagId) {
+        this.id = id;
         this.title = title;
         this.description = description;
-        this.created = LocalDateTime.now();
-        this.tags = new HashSet<>();
-        this.numberOfAnswer = 0;
-        this.numberOfViews = 0;
+        this.createdAt = createdAt;
+        this.numberOfAnswers = numberOfAnswers;
+        this.numberOfViews = numberOfViews;
+        this.userId = userId;
+        this.tagId = tagId;
     }
 
     public int getId() {
@@ -39,19 +39,23 @@ public class Question {
         return description;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public int getNumberOfAnswer() {
-        return numberOfAnswer;
+    public int getNumberOfAnswers() {
+        return numberOfAnswers;
     }
 
     public int getNumberOfViews() {
         return numberOfViews;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public int getTagId() {
+        return tagId;
     }
 }
