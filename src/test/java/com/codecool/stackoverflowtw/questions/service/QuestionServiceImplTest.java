@@ -2,14 +2,12 @@ package com.codecool.stackoverflowtw.questions.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class QuestionServiceImplTest {
-
-    @BeforeEach
-    void setUp() {
-    }
+@SpringBootTest
+public class QuestionServiceImplTest {
 
     @Test
     void getAllQuestions() {
