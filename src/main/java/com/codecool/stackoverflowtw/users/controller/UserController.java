@@ -3,7 +3,7 @@ package com.codecool.stackoverflowtw.users.controller;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.users.controller.dto.NewUserDTO;
 import com.codecool.stackoverflowtw.users.controller.dto.UserDTO;
-import com.codecool.stackoverflowtw.users.service.UserServiceImpl;
+import com.codecool.stackoverflowtw.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,11 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final Logger logger;
 
     @Autowired
-    public UserController(UserServiceImpl userService, Logger logger) {
+    public UserController(UserService userService, Logger logger) {
         this.userService = userService;
         this.logger = logger;
     }
