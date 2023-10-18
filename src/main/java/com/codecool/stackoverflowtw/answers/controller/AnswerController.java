@@ -23,7 +23,7 @@ public class AnswerController {
         this.logger = logger;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<Set<AnswerDTO>> getAllAnswers(@PathVariable int qid) {
         try {
             return new ResponseEntity<>(answerService.getAllAnswers(qid), HttpStatus.OK);

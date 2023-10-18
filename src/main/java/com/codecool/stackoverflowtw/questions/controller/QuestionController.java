@@ -24,7 +24,7 @@ public class QuestionController {
         this.logger = logger;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<QuestionDTO>> getAllQuestions() {
         try {
             return new ResponseEntity<>(questionServiceImpl.getAllQuestions(), HttpStatus.OK);
