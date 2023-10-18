@@ -4,8 +4,6 @@ import com.codecool.stackoverflowtw.users.controller.dto.NewUserDTO;
 import com.codecool.stackoverflowtw.users.controller.dto.UserDTO;
 import com.codecool.stackoverflowtw.users.model.User;
 import com.codecool.stackoverflowtw.users.repository.UserRepositoryImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -21,9 +19,6 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 */
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public Set<UserDTO> getAllUsers() {
@@ -59,8 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addNewUser(NewUserDTO userDTO) {
-        String hashedPassword = passwordEncoder.encode(userDTO.password());
-        userRepository.add(userDTO.username(), hashedPassword, userDTO.email());
+        userRepository.add(userDTO.username(), userDTO.password(), userDTO.email());
     }
 
     @Override
@@ -77,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public User validUsernameAndPassword(String username, String password){
         User user = getUserByUsername(username);
 
-        if(passwordEncoder.matches(password, user.getPassword())){
+        if(password.equals(user.getPassword())){
             return user;
         }else{
             return null;
