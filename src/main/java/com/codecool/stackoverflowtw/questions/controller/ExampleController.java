@@ -1,3 +1,4 @@
+/*
 package com.codecool.stackoverflowtw.questions.controller;
 
 import org.springframework.stereotype.Controller;
@@ -29,4 +30,4 @@ public class ExampleController {
         return "index";
     }
 }
-
+*/
