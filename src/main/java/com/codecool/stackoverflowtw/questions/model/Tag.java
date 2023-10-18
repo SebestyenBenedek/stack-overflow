@@ -6,15 +6,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Tag {
-    private final String name;
-    private Set<Question> questions;
+    private final int id;
+    private String name;
 
-    public Tag(String name) {
+    public Tag(int id, String name) {
+        this.id = id;
         this.name = name;
-        this.questions = new HashSet<>();
     }
 
-    public void add(Question question) {
-        questions.add(question);
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }
