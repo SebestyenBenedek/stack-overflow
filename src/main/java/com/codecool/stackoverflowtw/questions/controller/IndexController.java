@@ -1,3 +1,4 @@
+/*
 package com.codecool.stackoverflowtw.questions.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,3 +14,4 @@ public class IndexController {
         return "Hello!";
     }
 }
+*/

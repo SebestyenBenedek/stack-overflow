@@ -7,6 +7,9 @@ import reportWebVitals from './reportWebVitals';
 import UserPage from "./pages/UserPage/UserPage";
 import loginPage from "./pages/LoginPage/LoginPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import QuestionList from "./components/QuestionList/QuestionList";
+import QuestionCreator from "./pages/QuestionCreator";
+import Question from "./components/Question/Question";
 
 const router = createBrowserRouter([
     {
@@ -16,10 +19,32 @@ const router = createBrowserRouter([
     {
         path: "/user",
         element: <UserPage />,
+        children: [
+            {
+                path: "questions",
+                element: <UserQuestionList />,
+            },
+            {
+                path: "answers",
+                element: <UserAnswerList />,
+            }
+        ]
     },
     {
         path: "/login",
         element: <LoginPage />,
+    },
+    {
+        path: "/questions",
+        element: <QuestionList />,
+    },
+    {
+      path: "/questions/{id}",
+      element: <Question />,
+    },
+    {
+        path: "/questions/create",
+        element: <QuestionCreator />,
     }
 ]);
 

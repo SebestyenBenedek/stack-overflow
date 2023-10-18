@@ -24,7 +24,7 @@ public class UserController {
         this.logger = logger;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<Set<UserDTO>> getAllUsers() {
         try {
             return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
