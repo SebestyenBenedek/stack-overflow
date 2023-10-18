@@ -5,9 +5,18 @@ import com.codecool.stackoverflowtw.logger.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ConnectDatabaseImpl implements ConnectDatabase {
-    public Connection getConnection(String connectionString, Logger logger) {
+    private final String connectionString;
+    private final Logger logger;
+
+    public ConnectDatabaseImpl(String connectionString, Logger logger) {
+        this.connectionString = connectionString;
+        this.logger = logger;
+    }
+
+    public Connection getConnection() {
         Connection conn = null;
 
         try {

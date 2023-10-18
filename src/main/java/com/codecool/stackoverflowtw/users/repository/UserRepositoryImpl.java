@@ -9,18 +9,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UserRepositoryImpl implements UserRepository {
-    private final String connectionString;
     private final Logger logger;
     private ConnectDatabaseImpl connectDatabase;
 
-    public UserRepositoryImpl(String connectionString, Logger logger, ConnectDatabaseImpl connectDatabase) {
-        this.connectionString = connectionString;
+    public UserRepositoryImpl(Logger logger, ConnectDatabaseImpl connectDatabase) {
         this.logger = logger;
         this.connectDatabase = connectDatabase;
     }
 
     private Connection getConnection() {
-        return connectDatabase.getConnection(connectionString, logger);
+        return connectDatabase.getConnection();
     }
 
 

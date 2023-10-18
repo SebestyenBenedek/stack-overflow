@@ -10,18 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionRepositoryImpl implements QuestionRepository {
-    private final String connectionString;
     private final Logger logger;
     private ConnectDatabaseImpl connectDatabase;
 
-    public QuestionRepositoryImpl(String connectionString, Logger logger, ConnectDatabaseImpl connectDatabase) {
-        this.connectionString = connectionString;
+    public QuestionRepositoryImpl(Logger logger, ConnectDatabaseImpl connectDatabase) {
         this.logger = logger;
         this.connectDatabase = connectDatabase;
     }
 
     private Connection getConnection() {
-        return connectDatabase.getConnection(connectionString, logger);
+        return connectDatabase.getConnection();
     }
 
     @Override

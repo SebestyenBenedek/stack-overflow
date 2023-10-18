@@ -10,18 +10,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AnswerRepositoryImpl implements AnswerRepository {
-    private final String connectionString;
     private final Logger logger;
     private ConnectDatabaseImpl connectDatabase;
 
-    public AnswerRepositoryImpl(String connectionString, Logger logger, ConnectDatabaseImpl connectDatabase) {
-        this.connectionString = connectionString;
+    public AnswerRepositoryImpl(Logger logger, ConnectDatabaseImpl connectDatabase) {
         this.logger = logger;
         this.connectDatabase = connectDatabase;
     }
 
     private Connection getConnection() {
-        return connectDatabase.getConnection(connectionString, logger);
+        return connectDatabase.getConnection();
     }
 
     @Override
