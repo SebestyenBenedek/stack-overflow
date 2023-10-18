@@ -16,11 +16,12 @@ import java.util.Optional;
 @RequestMapping("/api/questions")
 public class QuestionController {
     private final QuestionServiceImpl questionServiceImpl;
-    private Logger logger;
+    private final Logger logger;
 
     @Autowired
-    public QuestionController(QuestionServiceImpl questionServiceImpl) {
+    public QuestionController(QuestionServiceImpl questionServiceImpl, Logger logger) {
         this.questionServiceImpl = questionServiceImpl;
+        this.logger = logger;
     }
 
     @GetMapping("/all")

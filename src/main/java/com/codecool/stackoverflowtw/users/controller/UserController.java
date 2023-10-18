@@ -16,11 +16,12 @@ import java.util.Set;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserServiceImpl userService;
-    private Logger logger;
+    private final Logger logger;
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService, Logger logger) {
         this.userService = userService;
+        this.logger = logger;
     }
 
     @GetMapping("/all")

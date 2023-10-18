@@ -9,18 +9,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/api/questions/{id}/answers")
 public class AnswerController {
     private final AnswerServiceImpl answerService;
-    private Logger logger;
+    private final Logger logger;
 
     @Autowired
-    public AnswerController(AnswerServiceImpl answerService) {
+    public AnswerController(AnswerServiceImpl answerService, Logger logger) {
         this.answerService = answerService;
+        this.logger = logger;
     }
 
     @GetMapping("/all")
