@@ -91,13 +91,14 @@ public class UserRepositoryImpl implements UserRepository {
                 preparedStatement.setObject(1, name);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
                     String username = resultSet.getString("username");
                     String password = resultSet.getString("password");
                     String email = resultSet.getString("email");
 
                     logger.logInfo("Retrieving Uer was successfully!");
 
-                    return new User(username, password, email);
+                    return new User(id, username, password, email);
                 }
                 resultSet.close();
                 preparedStatement.close();

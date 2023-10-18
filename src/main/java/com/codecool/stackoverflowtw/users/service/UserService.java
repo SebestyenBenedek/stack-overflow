@@ -55,4 +55,18 @@ public class UserService {
     public void updateUserById(int id, UserDTO userDTO) {
         userRepository.update(id, userDTO.username(), userDTO.password(), userDTO.email());
     }
+
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public User validUsernameAndPassword(String username, String password){
+        User user = getUserByUsername(username);
+
+        if(password.equals(user.getPassword())){
+            return user;
+        }else{
+            return null;
+        }
+    }
 }
