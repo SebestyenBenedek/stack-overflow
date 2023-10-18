@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -65,5 +66,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserById(int id, UserDTO userDTO) {
         userRepository.update(id, userDTO.username(), userDTO.password(), userDTO.email());
+    }
+
+    @Override
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User validUsernameAndPassword(String username, String password){
+        User user = getUserByUsername(username);
+
+        if(passwordEncoder.matches(password, user.getPassword())){
+            return user;
+        }else{
+            return null;
+        }
     }
 }
