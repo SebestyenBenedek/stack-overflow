@@ -81,6 +81,34 @@ public class UserRepositoryImpl implements UserRepository {
         return null;
     }
 
+
+    @Override
+    public User findByUsername(String name) {
+        String query = "SELECT * FROM users WHERE username = ?";
+
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setObject(1, name);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    String email = resultSet.getString("email");
+
+                    logger.logInfo("Retrieving Uer was successfully!");
+
+                    return new User(username, password, email);
+                }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error retrieving question: " + e.getMessage());
+        }
+        return null;
+    }
+
     @Override
     public void delete(int id) {
         String query = "DELETE FROM users WHERE id = ?";

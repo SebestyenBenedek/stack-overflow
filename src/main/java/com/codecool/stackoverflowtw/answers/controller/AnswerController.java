@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/questions/{id}/answers")
+@RequestMapping("/api/questions/{qid}/answers")
 public class AnswerController {
     private final AnswerService answerService;
     private final Logger logger;
@@ -24,9 +24,9 @@ public class AnswerController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Set<AnswerDTO>> getAllAnswers(@PathVariable int id) {
+    public ResponseEntity<Set<AnswerDTO>> getAllAnswers(@PathVariable int qid) {
         try {
-            return new ResponseEntity<>(answerService.getAllAnswers(id), HttpStatus.OK);
+            return new ResponseEntity<>(answerService.getAllAnswers(qid), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
