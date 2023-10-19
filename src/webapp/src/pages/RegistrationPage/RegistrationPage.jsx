@@ -6,4 +6,18 @@ const RegistrationPage = () => {
         password: "",
         email: ""
     });
+
+    const onInputChange = (e) => {
+        setFormInput((prev) => ({...prev, [e.target.name]: e.target.value}));
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
+    return (
+        <div>
+
+        </div>
+    )
+
 }
