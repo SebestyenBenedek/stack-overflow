@@ -18,7 +18,8 @@ public class StackoverflowTwApplication {
 
         Logger logger = new ConsoleLogger();
 
-        String connectionString = "src/main/resources/StackOverflow.db";
+        String connectionString = "jdbc:postgresql://localhost:5432/stackOverflow";
+        //String connectionString = "src/main/resources/StackOverflow.db";
         ConnectDatabaseImpl connectDatabase = new ConnectDatabaseImpl(connectionString, logger);
         
         connectDatabase.getConnection();
