@@ -3,6 +3,7 @@ package com.codecool.stackoverflowtw.users.service;
 import com.codecool.stackoverflowtw.users.controller.dto.NewUserDTO;
 import com.codecool.stackoverflowtw.users.controller.dto.UserDTO;
 import com.codecool.stackoverflowtw.users.model.User;
+import com.codecool.stackoverflowtw.users.repository.UserRepository;
 import com.codecool.stackoverflowtw.users.repository.UserRepositoryImpl;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +12,13 @@ import java.util.Set;
 
 @Service
 public class UserService {
-    private UserRepositoryImpl userRepository;
+    private UserRepository userRepository;
 
-/*
-    public UserServiceImpl(UserRepositoryImpl userRepository) {
+
+    public UserService(UserRepositoryImpl userRepository) {
         this.userRepository = userRepository;
     }
-*/
+
 
     public Set<UserDTO> getAllUsers() {
         Set<User> users = userRepository.getAll();
@@ -62,7 +63,6 @@ public class UserService {
 
     public User validUsernameAndPassword(String username, String password){
         User user = getUserByUsername(username);
-
         if(password.equals(user.getPassword())){
             return user;
         }else{

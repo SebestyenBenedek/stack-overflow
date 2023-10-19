@@ -21,8 +21,8 @@ public class ConnectDatabaseImpl implements ConnectDatabase {
         Connection conn = null;
 
         try {
-            String url = "jdbc:postgresql:" + connectionString;
-            conn = DriverManager.getConnection(url);
+            String url = connectionString;
+            conn = DriverManager.getConnection(url, "postgres", "123");
 
             logger.logInfo("Connection to postgresql has been established.");
         } catch (SQLException e) {

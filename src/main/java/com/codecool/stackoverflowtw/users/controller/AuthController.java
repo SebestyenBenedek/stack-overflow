@@ -28,7 +28,6 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest){
         User user = userService.validUsernameAndPassword(loginRequest.username(), loginRequest.password());
         if(user != null) {
-            logger.logInfo(user.toString());
             return ResponseEntity.ok(new AuthResponse(user.getId(), user.getUsername()));
         }else{
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

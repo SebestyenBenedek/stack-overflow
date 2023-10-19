@@ -27,7 +27,7 @@ public class StackoverflowTwApplication {
 
     @Bean
     ConnectDatabase getDBConnector() {
-        String connectionString = "//localhost:5432/stackOverflow?currentSchema=stackOverflow&user=postgres&password=123";
+        String connectionString = "jdbc:postgresql://localhost:5432/postgres";
 
         return new ConnectDatabaseImpl(connectionString, getLogger());
     }

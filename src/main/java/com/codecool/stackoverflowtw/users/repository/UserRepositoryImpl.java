@@ -1,18 +1,21 @@
 package com.codecool.stackoverflowtw.users.repository;
 
+import com.codecool.stackoverflowtw.database.service.ConnectDatabase;
 import com.codecool.stackoverflowtw.database.service.ConnectDatabaseImpl;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.users.model.User;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
-
+@Repository
 public class UserRepositoryImpl implements UserRepository {
     private final Logger logger;
-    private ConnectDatabaseImpl connectDatabase;
+    private ConnectDatabase connectDatabase;
 
-    public UserRepositoryImpl(Logger logger, ConnectDatabaseImpl connectDatabase) {
+    public UserRepositoryImpl(Logger logger, ConnectDatabase connectDatabase) {
         this.logger = logger;
         this.connectDatabase = connectDatabase;
     }
@@ -28,8 +31,9 @@ public class UserRepositoryImpl implements UserRepository {
         String query = "SELECT * FROM users";
 
         try (Connection conn = getConnection()) {
-            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                    ResultSet resultSet = preparedStatement.executeQuery();
+            Statement stmt = conn.createStatement();
+            ResultSet resultSet = stmt.executeQuery(query);
+
                     while (resultSet.next()) {
                         int id = resultSet.getInt("id");
                         String username = resultSet.getString("username");
@@ -41,9 +45,8 @@ public class UserRepositoryImpl implements UserRepository {
                         logger.logInfo("Retrieving all the Users was successfully!");
                     }
                     resultSet.close();
-                    preparedStatement.close();
-                    conn.close();
-                }
+                    stmt.close();
+
             } catch (SQLException e) {
                 logger.logError("Error retrieving all the Users " + e.getMessage());
             }
@@ -82,12 +85,35 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByUsername(String name) {
-        String query = "SELECT * FROM users WHERE username = ?";
+        try {
+            Connection conn = getConnection();
+            String query = "SELECT * FROM users WHERE username = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
 
+            ps.setString(1, name);
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String email = rs.getString("email");
+
+                return new User(id, username, password, email);
+            }
+
+        }catch (SQLException e){
+            logger.logInfo(e.getMessage());
+        }
+
+       /* String query = "SELECT * FROM users WHERE username = ?";
+        System.out.println(name);
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setObject(1, name);
                 ResultSet resultSet = preparedStatement.executeQuery();
+                System.out.println(resultSet.toString());
                 if (resultSet.next()) {
                     int id = resultSet.getInt("id");
                     String username = resultSet.getString("username");
@@ -104,7 +130,7 @@ public class UserRepositoryImpl implements UserRepository {
             }
         } catch (SQLException e) {
             logger.logError("Error retrieving question: " + e.getMessage());
-        }
+        }*/
         return null;
     }
 

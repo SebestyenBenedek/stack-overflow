@@ -13,6 +13,11 @@ const LoginPage = () =>{
     const handleSubmit = (e) =>{
         e.preventDefault();
 
+        const a = fetch("/api/auth/login", {
+            method: "POST",
+            body:JSON.stringify(formInput),
+            headers: { 'Content-Type': 'application/json', 'Accept': '*/*', 'Access-Control-Allow-Credentials': true}
+        })
     }
 
     return (
