@@ -9,5 +9,5 @@ public interface QuestionRepository {
     List<Question> getAll();
     Question get(int id);
     void delete(int id);
-    void add(String title, String description, LocalDateTime createdAt, int numberOfLikes, int numberOfViews, int userId);
+    void add(String title, String description, int numberOfLikes, int numberOfViews, int userId);
 }

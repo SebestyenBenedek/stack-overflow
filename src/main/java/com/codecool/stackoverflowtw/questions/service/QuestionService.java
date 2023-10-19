@@ -58,6 +58,6 @@ public class QuestionService {
     }
 
     public void addNewQuestion(NewQuestionDTO question) {
-        questionRepository.add(question.title(), question.description(), LocalDateTime.now(), STARTER_NUMBER_OF_LIKES, STARTER_NUMBER_OF_VIEWS, question.userId());
+        questionRepository.add(question.title(), question.description(), STARTER_NUMBER_OF_LIKES, STARTER_NUMBER_OF_VIEWS, question.userId());
     }
 }

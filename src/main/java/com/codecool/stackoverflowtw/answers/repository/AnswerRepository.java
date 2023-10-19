@@ -9,6 +9,6 @@ public interface AnswerRepository {
     Set<Answer> getAll(int id);
     Answer get(int id);
     void delete(int id);
-    void add(String description, int questionId, LocalDateTime createdAt, int numberOfLikes, int numberOfDislikes, int userId);
+    void add(String description, int questionId, int numberOfLikes, int numberOfDislikes, int userId);
     void update(int id, String description);
 }

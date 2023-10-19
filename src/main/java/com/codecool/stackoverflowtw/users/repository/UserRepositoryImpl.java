@@ -107,30 +107,6 @@ public class UserRepositoryImpl implements UserRepository {
             logger.logInfo(e.getMessage());
         }
 
-       /* String query = "SELECT * FROM users WHERE username = ?";
-        System.out.println(name);
-        try (Connection conn = getConnection()) {
-            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setObject(1, name);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                System.out.println(resultSet.toString());
-                if (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String username = resultSet.getString("username");
-                    String password = resultSet.getString("password");
-                    String email = resultSet.getString("email");
-
-                    logger.logInfo("Retrieving Uer was successfully!");
-
-                    return new User(id, username, password, email);
-                }
-                resultSet.close();
-                preparedStatement.close();
-                conn.close();
-            }
-        } catch (SQLException e) {
-            logger.logError("Error retrieving question: " + e.getMessage());
-        }*/
         return null;
     }
 
@@ -141,6 +117,7 @@ public class UserRepositoryImpl implements UserRepository {
         try (Connection conn = getConnection()) {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setObject(1, id);
+
                 preparedStatement.executeUpdate();
 
                 logger.logInfo("Question deleted successfully!");
@@ -181,6 +158,8 @@ public class UserRepositoryImpl implements UserRepository {
                 preparedStatement.setString(2, password);
                 preparedStatement.setString(3, email);
                 preparedStatement.setInt(4, id);
+
+                preparedStatement.executeUpdate();
 
                 logger.logInfo("Updating User was successfully!");
                 preparedStatement.close();
