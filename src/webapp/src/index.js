@@ -11,6 +11,7 @@ import QuestionCreator from "./pages/QuestionCreator";
 import Question from "./components/Question/Question";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import UserQuestionList from "./pages/UserQuestionList/UserQuestionList";
+import UserAnswerList from "./pages/UserAnswerList";
 
 const router = createBrowserRouter([
     {

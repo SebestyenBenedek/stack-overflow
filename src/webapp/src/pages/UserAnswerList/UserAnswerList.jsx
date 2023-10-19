@@ -2,36 +2,36 @@ import {useEffect, useState} from "react";
 import question from "../../components/Question/Question";
 import Loading from "../../components/Loading/Loading";
 import QuestionList from "../../components/QuestionList/QuestionList";
-import QuestionTable from "../../components/QuestionTable/QuestionTable";
+import AnswerTable from "../../components/AnswerTable";
 
 
-function UserQuestionList() {
+function UserAnswerList() {
     const [loading, setLoading] = useState(true);
-    const [questionList, setQuestionList] = useState([]);
+    const [answerList, setAnswerList] = useState([]);
 
     useEffect(() => {
-        const fetchQuestion = async () => {
-            const response = await fetch("/api/users/{id}/questions");
+        const fetchAnswer = async () => {
+            const response = await fetch("/api/users/{id}/answers");
             const jsonData = await response.json();
-            setQuestionList(jsonData.questions);
+            setAnswerList(jsonData.answers);
             setLoading(false);
         };
-        fetchQuestion();
+        fetchAnswer();
     }, []);
 
     const handleDelete = async (id) => {
-        const response = await fetch(`/api/questions/${id}`, {
+        const response = await fetch(`/api/answers/${id}`, {
             method: "DELETE",
             headers: {
                 token: localStorage.getItem("token"),
             },
         });
-        setQuestionList(questionList.filter((question) => question.id !== id));
+        setAnswerList(answerList.filter((answer) => answer.id !== id));
     };
 
     if (loading) return <Loading />;
 
-    return <QuestionTable questionList={questionList} onDelete={handleDelete} />;
+    return <AnswerTable answerList={answerList} onDelete={handleDelete} />;
 }
 
-export default UserQuestionList;
+export default UserAnswerList;
