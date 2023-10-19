@@ -58,7 +58,7 @@ public class AnswerService {
     }
 
     public void addNewAnswer(NewAnswerDTO answer) {
-        answerRepository.add(answer.description(), answer.questionId(), LocalDateTime.now(), STARTER_NUMBER_OF_LIKES, STARTER_NUMBER_OF_DISLIKES, answer.userId());
+        answerRepository.add(answer.description(), answer.questionId(), STARTER_NUMBER_OF_LIKES, STARTER_NUMBER_OF_DISLIKES, answer.userId());
     }
 
     public void updateAnswerById(int id, AnswerDTO answerDTO) {
