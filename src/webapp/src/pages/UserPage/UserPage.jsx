@@ -1,19 +1,16 @@
 import React from 'react'
 import Header from "./Header";
-import About from "./About";
-import Navbar from "./Navbar";
 
-import './UserPage.css'
-import Skills from "./Skills";
 import QuestionList from "../../components/QuestionList/QuestionList";
+import Navbar from "../../components/Navbar/Navbar";
 
 const UserPage = () => {
 
     return (
         <div className="UserPage">
+            <Navbar />
             <Header />
             <hr />
-            <Navbar />
             <br />
             {/*<hr />*/}
             {/*<h1 className="aboutheader">About Me</h1>*/}

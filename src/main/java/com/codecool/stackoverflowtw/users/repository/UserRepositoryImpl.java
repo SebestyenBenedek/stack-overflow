@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
-
 @Repository
 public class UserRepositoryImpl implements UserRepository {
     private final Logger logger;
@@ -32,24 +31,25 @@ public class UserRepositoryImpl implements UserRepository {
         String query = "SELECT * FROM users";
 
         try (Connection conn = getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
 
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                String email = resultSet.getString("email");
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String username = resultSet.getString("username");
+                        String password = resultSet.getString("password");
+                        String email = resultSet.getString("email");
 
-                users.add(new User(id, username, password, email));
+                        users.add(new User(id, username, password, email));
 
+                        logger.logInfo("Retrieving all the Users was successfully!");
+                    }
+                    resultSet.close();
+                    stmt.close();
+
+            } catch (SQLException e) {
+                logger.logError("Error retrieving all the Users " + e.getMessage());
             }
-            logger.logInfo("Retrieving all the Users was successfully!");
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            logger.logError("Error retrieving all the Users " + e.getMessage());
-        }
 
         return users;
     }
@@ -59,24 +59,25 @@ public class UserRepositoryImpl implements UserRepository {
         String query = "SELECT * FROM users WHERE id = ?";
 
         try (Connection conn = getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setObject(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setObject(1, id);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    int userId = resultSet.getInt("id");
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    String email = resultSet.getString("email");
 
-            if (resultSet.next()) {
-                int userId = resultSet.getInt("id");
-                String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                String email = resultSet.getString("email");
+                    logger.logInfo("Retrieving Uer was successfully!");
 
-                logger.logInfo("Retrieving User was successfully!");
-
-                return new User(userId, username, password, email);
+                    return new User(userId, username, password, email);
+                }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
             }
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
-            logger.logError("Error retrieving User: " + e.getMessage());
+            logger.logError("Error retrieving question: " + e.getMessage());
         }
         return null;
     }
@@ -84,29 +85,52 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByUsername(String name) {
-        String query = "SELECT * FROM users WHERE username = ?";
+        try {
+            Connection conn = getConnection();
+            String query = "SELECT * FROM users WHERE username = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
 
-        try (Connection conn = getConnection()) {
-            ;
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, name);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                String email = resultSet.getString("email");
+            ps.setString(1, name);
 
-                logger.logInfo("Retrieving User by name was successfully!");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                String email = rs.getString("email");
 
                 return new User(id, username, password, email);
             }
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
+
+        }catch (SQLException e){
             logger.logInfo(e.getMessage());
         }
 
+       /* String query = "SELECT * FROM users WHERE username = ?";
+        System.out.println(name);
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setObject(1, name);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                System.out.println(resultSet.toString());
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    String email = resultSet.getString("email");
+
+                    logger.logInfo("Retrieving Uer was successfully!");
+
+                    return new User(id, username, password, email);
+                }
+                resultSet.close();
+                preparedStatement.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            logger.logError("Error retrieving question: " + e.getMessage());
+        }*/
         return null;
     }
 
@@ -115,13 +139,14 @@ public class UserRepositoryImpl implements UserRepository {
         String query = "DELETE FROM users WHERE id = ?";
 
         try (Connection conn = getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setObject(1, id);
-            preparedStatement.executeUpdate();
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setObject(1, id);
+                preparedStatement.executeUpdate();
 
-            logger.logInfo("Question deleted successfully!");
-
-            preparedStatement.close();
+                logger.logInfo("Question deleted successfully!");
+                preparedStatement.close();
+                conn.close();
+            }
         } catch (SQLException e) {
             logger.logError("Error deleting question: " + e.getMessage());
         }
@@ -131,15 +156,16 @@ public class UserRepositoryImpl implements UserRepository {
     public void add(String username, String password, String email) {
         String query = "INSERT INTO users(username, password, email) VALUES(?,?,?)";
 
-        try (Connection conn = getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, email);
+        try (Connection conn = getConnection(); PreparedStatement preparedStatement = conn.prepareStatement(query)) {
 
-            logger.logInfo("Adding a new User was successfully!");
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, email);
 
-            preparedStatement.close();
+                preparedStatement.executeUpdate();
+
+                logger.logInfo("Adding a new User was successfully!");
+
         } catch (SQLException e) {
             logger.logError("Error adding new User: " + e.getMessage());
         }
@@ -150,15 +176,16 @@ public class UserRepositoryImpl implements UserRepository {
         String query = "UPDATE users SET username = ?, password = ?, email = ? WHERE id = ?";
 
         try (Connection conn = getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, email);
-            preparedStatement.setInt(4, id);
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+                preparedStatement.setString(3, email);
+                preparedStatement.setInt(4, id);
 
-            logger.logInfo("Updating User was successfully!");
-
-            preparedStatement.close();
+                logger.logInfo("Updating User was successfully!");
+                preparedStatement.close();
+                conn.close();
+            }
         } catch (SQLException e) {
             logger.logError("Error updating User: " + e.getMessage());
         }

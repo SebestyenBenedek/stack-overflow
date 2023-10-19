@@ -1,23 +1,30 @@
 import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const LoginPage = () =>{
     const [formInput, setFormInput] = useState({
         username: "",
         password: "",
     });
+    const navigate = useNavigate();
 
     const onInputChange = (e) => {
         setFormInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();
-
-        const a = fetch("/api/auth/login", {
+        await fetch("/api/auth/login", {
             method: "POST",
             body:JSON.stringify(formInput),
             headers: { 'Content-Type': 'application/json', 'Accept': '*/*', 'Access-Control-Allow-Credentials': true}
-        })
+        }).then(async (res) =>{
+            const response = await res.json()
+
+            localStorage.setItem("token", response.id)
+
+            navigate("/")
+        }).catch(err => console.log(err))
     }
 
     return (

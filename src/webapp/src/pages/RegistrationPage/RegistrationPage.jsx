@@ -10,8 +10,16 @@ const RegistrationPage = () => {
     const onInputChange = (e) => {
         setFormInput((prev) => ({...prev, [e.target.name]: e.target.value}));
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        await fetch("/api/users/", {
+            method: "POST",
+            body:JSON.stringify(formInput),
+            headers: { 'Content-Type': 'application/json', 'Accept': '*/*', 'Access-Control-Allow-Credentials': true}
+        }).then(()=>{
+            console.log("goood")
+        }).catch(err => console.log(err))
     };
 
     return (
@@ -19,15 +27,15 @@ const RegistrationPage = () => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Username:</label>
-                    <input name="username" onSubmit={onInputChange} type="text"/>
+                    <input name="username" onChange={onInputChange} type="text"/>
                 </div>
                 <div>
                     <label>Password:</label>
-                    <input name="password" onSubmit={onInputChange} type="text"/>
+                    <input name="password" onChange={onInputChange} type="text"/>
                 </div>
                 <div>
                     <label>E-mail:</label>
-                    <input name="email" onSubmit={onInputChange} type="text"/>
+                    <input name="email" onChange={onInputChange} type="text"/>
                 </div>
 
                 <button>Register</button>
