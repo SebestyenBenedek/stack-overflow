@@ -58,9 +58,10 @@ CREATE TABLE answers (
     id SERIAL PRIMARY KEY,
     description TEXT,
     questionId INTEGER REFERENCES questions(id),
-    createdAt TIMESTAMP default now(),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     numberOfLikes INTEGER,
-    numberOfDislikes INTEGER
+    numberOfDislikes INTEGER,
+    userId INTEGER REFERENCES users(id)
 );
 
 CREATE TABLE tags (

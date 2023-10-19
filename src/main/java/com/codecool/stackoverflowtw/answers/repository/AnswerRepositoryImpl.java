@@ -28,7 +28,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     @Override
     public Set<Answer> getAll(int questionId) {
         Set<Answer> answerList = new HashSet<>();
-        String query = "SELECT * FROM answers WHERE id = ?";
+        String query = "SELECT * FROM answers WHERE questionId = ?";
 
         try (Connection conn = getConnection()) {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -106,7 +106,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
 
     @Override
     public void add(String description, int questionId, int numberOfLikes, int numberOfDislikes, int userId) {
-        String query = "INSERT INTO answers(description, questionId, numberOfLikes, numberofdislikes, userId) VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO answers(description, questionId, numberOfLikes, numberOfDislikes, userId) VALUES(?,?,?,?,?)";
 
         try (Connection conn = getConnection()) {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
