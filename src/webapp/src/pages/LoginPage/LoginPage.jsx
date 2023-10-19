@@ -21,7 +21,7 @@ const LoginPage = () =>{
         }).then(async (res) =>{
             const response = await res.json()
 
-            localStorage.setItem("id", response.id)
+            localStorage.setItem("token", response.id)
 
             navigate("/")
         }).catch(err => console.log(err))
