@@ -1,4 +1,4 @@
-ALTER USER "postgres" WITH PASSWORD '123';
+ALTER USER postgres WITH PASSWORD '123';
 
 
 --
