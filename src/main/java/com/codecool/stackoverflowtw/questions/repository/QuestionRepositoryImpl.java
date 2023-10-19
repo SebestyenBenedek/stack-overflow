@@ -106,15 +106,15 @@ public class QuestionRepositoryImpl implements QuestionRepository {
     }
 
     @Override
-    public void add(String title, String description, LocalDateTime createdAt, int numberOfLikes, int numberOfViews, int userId) {
-        String query = "INSERT INTO questions(title, description, createdAt, numberofanwsers, numberOfViews, userId) VALUES(?,?,?,?,?,?)";
+    public void add(String title, String description, LocalDateTime createdAt, int numberOfAnswers, int numberOfViews, int userId) {
+        String query = "INSERT INTO questions(title, description, createdAt, numberofanswers, numberOfViews, userId) VALUES(?,?,?,?,?,?)";
 
         try (Connection conn = getConnection()) {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, description);
             preparedStatement.setTimestamp(3, Timestamp.valueOf(createdAt));
-            preparedStatement.setInt(4, numberOfLikes);
+            preparedStatement.setInt(4, numberOfAnswers);
             preparedStatement.setInt(5, numberOfViews);
             preparedStatement.setInt(6, userId);
 
