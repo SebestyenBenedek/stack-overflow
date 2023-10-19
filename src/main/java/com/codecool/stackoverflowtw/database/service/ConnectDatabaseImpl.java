@@ -20,12 +20,12 @@ public class ConnectDatabaseImpl implements ConnectDatabase {
         Connection conn = null;
 
         try {
-            String url = "jdbc:sqlite:" + connectionString;
+            String url = "jdbc:postgresql:" + connectionString;
             conn = DriverManager.getConnection(url);
 
-            logger.logInfo("Connection to SQLite has been established.");
+            logger.logInfo("Connection to postgresql has been established.");
         } catch (SQLException e) {
-            logger.logError("Error while connecting to SQLite: " + e.getMessage());
+            logger.logError("Error while connecting to postgresql: " + e.getMessage());
         }
 
         return conn;
