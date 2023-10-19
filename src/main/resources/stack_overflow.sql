@@ -1,3 +1,6 @@
+ALTER USER "postgres" WITH PASSWORD '123';
+
+
 --
 -- PostgreSQL database dump
 --
