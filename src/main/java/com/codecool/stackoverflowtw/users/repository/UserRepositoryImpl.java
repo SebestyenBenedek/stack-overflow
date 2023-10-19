@@ -31,8 +31,8 @@ public class UserRepositoryImpl implements UserRepository {
         String query = "SELECT * FROM users";
 
         try (Connection conn = getConnection()) {
-            Statement stmt = conn.createStatement();
-            ResultSet resultSet = stmt.executeQuery(query);
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
 
                     while (resultSet.next()) {
                         int id = resultSet.getInt("id");
