@@ -5,12 +5,12 @@ import './index.css';
 import HomePage from './pages/HomePage/HomePage';
 import reportWebVitals from './reportWebVitals';
 import UserPage from "./pages/UserPage/UserPage";
-import loginPage from "./pages/LoginPage/LoginPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import QuestionList from "./components/QuestionList/QuestionList";
 import QuestionCreator from "./pages/QuestionCreator";
 import Question from "./components/Question/Question";
-import UserQuestionList from "./pages/UserQuestionList";
+import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
+import UserQuestionList from "./pages/UserQuestionList/UserQuestionList";
 import UserAnswerList from "./pages/UserAnswerList";
 
 const router = createBrowserRouter([
@@ -25,12 +25,16 @@ const router = createBrowserRouter([
             {
                 path: "questions",
                 element: <UserQuestionList />,
-            },
-            {
+            }
+            /*{
                 path: "answers",
                 element: <UserAnswerList />,
-            }
+            }*/
         ]
+    },
+    {
+        path: "/registration",
+        element: <RegistrationPage />,
     },
     {
         path: "/login",
