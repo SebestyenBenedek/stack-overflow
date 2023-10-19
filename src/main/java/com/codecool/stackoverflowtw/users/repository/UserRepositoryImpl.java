@@ -156,16 +156,16 @@ public class UserRepositoryImpl implements UserRepository {
     public void add(String username, String password, String email) {
         String query = "INSERT INTO users(username, password, email) VALUES(?,?,?)";
 
-        try (Connection conn = getConnection()) {
-            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection(); PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+
                 preparedStatement.setString(1, username);
                 preparedStatement.setString(2, password);
                 preparedStatement.setString(3, email);
 
+                preparedStatement.executeUpdate();
+
                 logger.logInfo("Adding a new User was successfully!");
-                preparedStatement.close();
-                conn.close();
-            }
+
         } catch (SQLException e) {
             logger.logError("Error adding new User: " + e.getMessage());
         }
