@@ -49,7 +49,7 @@ CREATE TABLE questions(
     title VARCHAR(300) NOT NULL,
     description TEXT,
     createdAt TIMESTAMP NOT NULL,
-    numberOfAnwsers INTEGER,
+    numberOfAnswers INTEGER,
     numberOfViews INTEGER,
     userId INTEGER REFERENCES users(id)
 );
@@ -90,4 +90,4 @@ CREATE TABLE answers_questions_reference (
 );
 
 INSERT INTO users(username, password, email) VALUES ('admin', '123', 'admin@admin.com');
-INSERT INTO questions(title, description, createdAt, numberOfAnwsers, numberOfViews, userId) VALUES ('Where is my phone?', 'I lost my phone a few minutes ago and I can''t find it :(', localtimestamp, 2, 41, 1);
+INSERT INTO questions(title, description, createdAt, numberOfAnswers, numberOfViews, userId) VALUES ('Where is my phone?', 'I lost my phone a few minutes ago and I can''t find it :(', localtimestamp, 2, 41, 1);

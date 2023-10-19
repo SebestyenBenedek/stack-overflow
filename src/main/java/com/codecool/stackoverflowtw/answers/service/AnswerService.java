@@ -3,7 +3,8 @@ package com.codecool.stackoverflowtw.answers.service;
 import com.codecool.stackoverflowtw.answers.controller.dto.AnswerDTO;
 import com.codecool.stackoverflowtw.answers.controller.dto.NewAnswerDTO;
 import com.codecool.stackoverflowtw.answers.model.Answer;
-import com.codecool.stackoverflowtw.answers.repository.AnswerRepositoryImpl;
+import com.codecool.stackoverflowtw.answers.repository.AnswerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,12 @@ import java.util.Set;
 public class AnswerService {
     public static final int STARTER_NUMBER_OF_LIKES = 0;
     public static final int STARTER_NUMBER_OF_DISLIKES = 0;
-    private AnswerRepositoryImpl answerRepository;
+    private AnswerRepository answerRepository;
+
+    @Autowired
+    public AnswerService(AnswerRepository answerRepository) {
+        this.answerRepository = answerRepository;
+    }
 
     public Set<AnswerDTO> getAllAnswers(int questionId) {
         Set<Answer> answers = answerRepository.getAll(questionId);

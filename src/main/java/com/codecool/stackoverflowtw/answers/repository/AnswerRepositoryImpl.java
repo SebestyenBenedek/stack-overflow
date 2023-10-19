@@ -28,7 +28,7 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     @Override
     public Set<Answer> getAll(int questionId) {
         Set<Answer> answerList = new HashSet<>();
-        String query = "SELECT * FROM answers WHERE questionId = ?";
+        String query = "SELECT * FROM answers WHERE id = ?";
 
         try (Connection conn = getConnection()) {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
