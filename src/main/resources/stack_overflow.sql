@@ -49,7 +49,7 @@ CREATE TABLE questions(
     title VARCHAR(300) NOT NULL,
     description TEXT,
     createdAt TIMESTAMP NOT NULL,
-    numberOfAnwsers INTEGER,
+    numberOfAnswers INTEGER,
     numberOfViews INTEGER,
     userId INTEGER REFERENCES users(id)
 );

@@ -41,7 +41,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 String title = resultSet.getString("title");
                 String description = resultSet.getString("description");
                 LocalDateTime createdAt = resultSet.getTimestamp("createdAt").toLocalDateTime();
-                int numberOfAnswers = resultSet.getInt("numberOfAnwsers");
+                int numberOfAnswers = resultSet.getInt("numberOfAnswers");
                 int numberOfViews = resultSet.getInt("numberOfViews");
                 int userId = resultSet.getInt("userId");
 
@@ -72,7 +72,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
                 String title = resultSet.getString("title");
                 String description = resultSet.getString("description");
                 LocalDateTime createdAt = resultSet.getTimestamp("createdAt").toLocalDateTime();
-                int numberOfAnswers = resultSet.getInt("numberOfAnwsers");
+                int numberOfAnswers = resultSet.getInt("numberOfAnswers");
                 int numberOfViews = resultSet.getInt("numberOfViews");
                 int user = resultSet.getInt("userId");
 
