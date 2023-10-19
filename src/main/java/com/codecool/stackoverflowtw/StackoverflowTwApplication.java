@@ -1,33 +1,34 @@
 package com.codecool.stackoverflowtw;
 
+import com.codecool.stackoverflowtw.database.service.ConnectDatabase;
 import com.codecool.stackoverflowtw.database.service.ConnectDatabaseImpl;
 import com.codecool.stackoverflowtw.logger.ConsoleLogger;
 import com.codecool.stackoverflowtw.logger.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.sql.Connection;
 
 
 @SpringBootApplication
-@ComponentScan({"com.codecool.stackoverflowtw.logger"})
 public class StackoverflowTwApplication {
 
     public static void main(String[] args) {
-
-        Logger logger = new ConsoleLogger();
-
-        String connectionString = "//localhost:5432/stackOverflow?currentSchema=stackOverflow&user=postgres&password=123";
-        //String connectionString = "src/main/resources/StackOverflow.db";
-        ConnectDatabaseImpl connectDatabase = new ConnectDatabaseImpl(connectionString, logger);
-        
-        connectDatabase.getConnection();
-
-
-
         SpringApplication.run(StackoverflowTwApplication.class, args);
+    }
 
+    @Bean
+    Logger getLogger() {
+        return new ConsoleLogger();
+    }
 
+    @Bean
+    ConnectDatabase getDBConnector() {
+        String connectionString = "//localhost:5432/stackOverflow?currentSchema=stackOverflow&user=postgres&password=123";
+
+        return new ConnectDatabaseImpl(connectionString, getLogger());
     }
 }

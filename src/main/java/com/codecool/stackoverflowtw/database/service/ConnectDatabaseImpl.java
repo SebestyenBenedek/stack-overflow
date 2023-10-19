@@ -1,6 +1,7 @@
 package com.codecool.stackoverflowtw.database.service;
 
 import com.codecool.stackoverflowtw.logger.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,19 +1,24 @@
 package com.codecool.stackoverflowtw.questions.repository;
 
+import com.codecool.stackoverflowtw.database.service.ConnectDatabase;
 import com.codecool.stackoverflowtw.database.service.ConnectDatabaseImpl;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.questions.model.Question;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class QuestionRepositoryImpl implements QuestionRepository {
     private final Logger logger;
-    private ConnectDatabaseImpl connectDatabase;
+    private final ConnectDatabase connectDatabase;
 
-    public QuestionRepositoryImpl(Logger logger, ConnectDatabaseImpl connectDatabase) {
+    @Autowired
+    public QuestionRepositoryImpl(Logger logger, ConnectDatabase connectDatabase) {
         this.logger = logger;
         this.connectDatabase = connectDatabase;
     }
