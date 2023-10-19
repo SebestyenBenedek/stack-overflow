@@ -105,17 +105,18 @@ public class AnswerRepositoryImpl implements AnswerRepository {
     }
 
     @Override
-    public void add(String description, int questionId, LocalDateTime createdAt, int numberOfLikes, int numberOfDislikes, int userId) {
-        String query = "INSERT INTO answers(description, questionId, createdAt, numberOfLikes, numberOdDislikes, userId) VALUES(?,?,?,?,?,?)";
+    public void add(String description, int questionId, int numberOfLikes, int numberOfDislikes, int userId) {
+        String query = "INSERT INTO answers(description, questionId, numberOfLikes, numberofdislikes, userId) VALUES(?,?,?,?,?)";
 
         try (Connection conn = getConnection()) {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, description);
             preparedStatement.setInt(2, questionId);
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(createdAt));
-            preparedStatement.setInt(4, numberOfLikes);
-            preparedStatement.setInt(5, numberOfDislikes);
-            preparedStatement.setInt(6, userId);
+            preparedStatement.setInt(3, numberOfLikes);
+            preparedStatement.setInt(4, numberOfDislikes);
+            preparedStatement.setInt(5, userId);
+
+            preparedStatement.executeUpdate();
 
             logger.logInfo("Adding a new answer to the chosen question was successfully!");
 
@@ -133,6 +134,8 @@ public class AnswerRepositoryImpl implements AnswerRepository {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, description);
             preparedStatement.setInt(2, id);
+
+            preparedStatement.executeUpdate();
 
             logger.logInfo("Updating answer was successfully!");
 
