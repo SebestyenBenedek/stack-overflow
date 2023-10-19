@@ -10,6 +10,8 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import QuestionList from "./components/QuestionList/QuestionList";
 import QuestionCreator from "./pages/QuestionCreator";
 import Question from "./components/Question/Question";
+import UserQuestionList from "./pages/UserQuestionList";
+import UserAnswerList from "./pages/UserAnswerList";
 
 const router = createBrowserRouter([
     {
