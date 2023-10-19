@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/questions/{qid}/answers")
+@RequestMapping("/api/questions/{questionId}/answers")
 public class AnswerController {
     private final AnswerService answerService;
     private final Logger logger;
