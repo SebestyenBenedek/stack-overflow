@@ -14,9 +14,8 @@ public class Question {
     private int numberOfAnswers;
     private int numberOfViews;
     private final int userId;
-    private final int tagId;
 
-    public Question(int id, String title, String description, LocalDateTime createdAt, int numberOfAnswers, int numberOfViews, int userId, int tagId) {
+    public Question(int id, String title, String description, LocalDateTime createdAt, int numberOfAnswers, int numberOfViews, int userId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -24,7 +23,6 @@ public class Question {
         this.numberOfAnswers = numberOfAnswers;
         this.numberOfViews = numberOfViews;
         this.userId = userId;
-        this.tagId = tagId;
     }
 
     public int getId() {
@@ -53,9 +51,5 @@ public class Question {
 
     public int getUserId() {
         return userId;
-    }
-
-    public int getTagId() {
-        return tagId;
     }
 }
