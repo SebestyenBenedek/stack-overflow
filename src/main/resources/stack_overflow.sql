@@ -24,27 +24,35 @@ SET default_with_oids = false;
 DROP TABLE IF EXISTS answers;
 DROP TABLE IF EXISTS answers_questions_reference;
 DROP TABLE IF EXISTS answers_users_reference;
+DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS questions_tags_reference;
 DROP TABLE IF EXISTS questions_users_reference;
-DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS users;
 
 --
 -- Name: categories; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(16),
+    password TEXT,
+    email VARCHAR(64)
+);
+
 CREATE TABLE questions(
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     title VARCHAR(300) NOT NULL,
     description TEXT,
     createdAt TIMESTAMP NOT NULL,
     numberOfAnwsers INTEGER,
-    numberOfViews INTEGER
+    numberOfViews INTEGER,
+    userId INTEGER REFERENCES users(id)
 );
 
 CREATE TABLE answers (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     description TEXT,
     questionId INTEGER REFERENCES questions(id),
     createdAt TIMESTAMP,
@@ -52,11 +60,10 @@ CREATE TABLE answers (
     numberOfDislikes INTEGER
 );
 
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY,
-    username VARCHAR(16),
-    password TEXT,
-    email VARCHAR(64)
+CREATE TABLE tags (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(16),
+    questionId INTEGER REFERENCES questions(id)
 );
 
 CREATE TABLE questions_tags_reference (
@@ -79,8 +86,5 @@ CREATE TABLE answers_questions_reference (
     questionId INTEGER
 );
 
-CREATE TABLE tags (
-    id INTEGER PRIMARY KEY,
-    name VARCHAR(16),
-    questionId INTEGER REFERENCES questions(id)
-);
+INSERT INTO users(username, password, email) VALUES ('admin', '123', 'admin@admin.com');
+INSERT INTO questions(title, description, createdAt, numberOfAnwsers, numberOfViews, userId) VALUES ('Where is my phone?', 'I lost my phone a few minutes ago and I can''t find it :(', localtimestamp, 2, 41, 1);
