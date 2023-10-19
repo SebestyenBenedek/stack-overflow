@@ -2,8 +2,7 @@ import {useEffect, useState} from "react";
 import question from "../../components/Question/Question";
 import Loading from "../../components/Loading/Loading";
 import QuestionList from "../../components/QuestionList/QuestionList";
-import QuestionTable from "../../components/QuestionTable";
-
+import QuestionTable from "../../components/QuestionTable/QuestionTable";
 
 
 function UserQuestionList() {
