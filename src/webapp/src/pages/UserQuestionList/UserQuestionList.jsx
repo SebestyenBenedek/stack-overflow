@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import question from "../../components/Question/Question";
 import Loading from "../../components/Loading/Loading";
-import QuestionItem from "../../components/QuestionItem/QuestionItem";
+import QuestionList from "../../components/QuestionList/QuestionList";
 import QuestionTable from "../../components/QuestionTable/QuestionTable";
 
 

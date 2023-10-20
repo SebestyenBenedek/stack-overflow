@@ -3,8 +3,9 @@ import "./HomePage.css"; // Import your CSS file for custom styles
 import Navbar from "../../components/Navbar/Navbar";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import QuestionItem from "../../components/QuestionItem/QuestionItem";
+import QuestionList from "../../components/QuestionList/QuestionList";
 import Loading from "../../components/Loading/Loading";
+import Question from "../../components/Question/Question";
 
 const HomePage = () => {
     const [loading, setLoading] = useState(true);
@@ -14,8 +15,8 @@ const HomePage = () => {
         fetch('/api/questions/')
             .then((res) => res.json())
             .then((data) => {
-                console.log(questions);
-                setQuestions(data.questions);
+                //console.log(data);
+                setQuestions(data);
                 setLoading(false);
             });
     }, [questions]);
@@ -27,11 +28,12 @@ const HomePage = () => {
         <div>
             <Navbar />
             <SearchBox />
-            <div className="content">
+            <div className="page-content" >
+                <h1 className="title is-2">Questions</h1>
+                <hr className="hr-style"/>
                 {questions?.map((question) => (
-                    <QuestionItem key={question.id} question={question} />
+                    <Question key={question.id} question={question} />
                 ))}
-                <Sidebar tagList={["help", "funny", "Adam"]} />
             </div>
         </div>
     );

@@ -1,7 +1,8 @@
 import React from "react";
-import "./Question.css"; // Import your CSS file for custom styles
+import "./Question.css";
+import questionItem from "../QuestionList/QuestionList"; // Import your CSS file for custom styles
 
-const Question = ({ title, user, description, answers, views }) => {
+const Question = ({question}) => {
 
     return (
         <div className="box question-box">
@@ -13,10 +14,10 @@ const Question = ({ title, user, description, answers, views }) => {
                               <span className="icon">
                                 <i className="fa-regular fa-circle-question"></i>
                               </span>
-                              <span><strong>{ title }</strong></span>
-                            </span> <small>@{user}</small>
+                              <span><strong>{ question.title }</strong></span>
+                            </span> <small>@{question.userId}</small>
                             <br />
-                            {description}
+                            {question.description}
                         </p>
                     </div>
                     <hr className="hr-style"/>
@@ -41,11 +42,11 @@ const Question = ({ title, user, description, answers, views }) => {
                         <div className="level-right">
 
                             <span className="level-item">
-                                <span className="is-medium is-white"><strong>{answers}</strong> answers</span>
+                                <span className="is-medium is-white"><strong>{question.numberOfAnswer}</strong> answers</span>
                             </span>
 
                             <span className="level-item">
-                                <span className="is-medium is-white"><strong>{views}</strong> views</span>
+                                <span className="is-medium is-white"><strong>{question.numberOfViews}</strong> views</span>
                             </span>
 
                         </div>
