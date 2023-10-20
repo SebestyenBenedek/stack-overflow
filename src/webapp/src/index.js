@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage/HomePage';
 import reportWebVitals from './reportWebVitals';
 import UserPage from "./pages/UserPage/UserPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import QuestionList from "./components/QuestionList/QuestionList";
+import QuestionItem from "./components/QuestionItem/QuestionItem";
 import QuestionCreator from "./pages/QuestionCreator";
 import Question from "./components/Question/Question";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/questions",
-        element: <QuestionList />,
+        element: <QuestionItem />,
     },
     {
       path: "/questions/{id}",

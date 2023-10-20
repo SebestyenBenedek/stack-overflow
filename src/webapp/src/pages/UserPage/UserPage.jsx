@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from "./Header";
 
-import QuestionList from "../../components/QuestionList/QuestionList";
+import QuestionItem from "../../components/QuestionItem/QuestionItem";
 import Navbar from "../../components/Navbar/Navbar";
 
 const UserPage = () => {
@@ -24,7 +24,7 @@ const UserPage = () => {
             {/*<hr />*/}
             <h1 className="questionheader">My Questions</h1>
             <hr/>
-            <QuestionList />
+            <QuestionItem />
             <hr/>
             <h1 className="answerheader">My Answers</h1>
             <hr/>

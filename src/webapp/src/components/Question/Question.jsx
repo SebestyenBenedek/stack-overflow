@@ -1,7 +1,7 @@
 import React from "react";
 import "./Question.css"; // Import your CSS file for custom styles
 
-const HomePage = ({ title, user, description, tags, answers, views }) => {
+const Question = ({ title, user, description, answers, views }) => {
 
     return (
         <div className="box question-box">
@@ -23,7 +23,7 @@ const HomePage = ({ title, user, description, tags, answers, views }) => {
                     <nav className="level is-mobile">
                         <div className="level-left">
 
-                            {tags?.map((tag) => {
+                            {/*{tags?.map((tag) => {
                                 return (
                                     <span className="level-item">
                                         <span className="tag is-rounded">
@@ -34,7 +34,7 @@ const HomePage = ({ title, user, description, tags, answers, views }) => {
                                         </span>
                                     </span>
                                 )
-                            })}
+                            })}*/}
 
                         </div>
 
@@ -56,4 +56,4 @@ const HomePage = ({ title, user, description, tags, answers, views }) => {
     );
 };
 
-export default HomePage;
+export default Question;
