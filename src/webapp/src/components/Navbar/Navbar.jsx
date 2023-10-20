@@ -39,8 +39,9 @@ const Navbar = () => {
                             Questions
                         </a>
 
-                        <a className="navbar-item">
+                        <a href={"/questions/create"} className="navbar-item">
                             Ask a question!
+
                         </a>
 
                     </div>

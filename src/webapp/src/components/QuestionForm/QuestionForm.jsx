@@ -4,18 +4,18 @@ import {useState} from "react";
 function QuestionForm({ question, onCancel, onSave }) {
     const [title, setTitle] = useState(question?.title ?? '');
     const [description, setDescription] = useState(question?.description ?? '');
-    const [tag, setTag] = useState(question?.tag ?? '');
 
-    const onSubmit = () => {
+    const onSubmit = (e) => {
+        e.preventDefault();
+
         onSave({
             title,
-            description,
-            tag,
+            description
         });
     };
 
     return (
-        <form onSubmit={onSubmit} className={"createForm"}>
+        <form onSubmit={onSubmit} >
             <div className={"control"}>
                 <label htmlFor={"title"}>Title:</label>
                 <input value={title} onChange={(e) => setTitle(e.target.value)} name={"title"} id={"title"} />
@@ -26,13 +26,8 @@ function QuestionForm({ question, onCancel, onSave }) {
                 <input value={description} onChange={(e) => setDescription(e.target.value)} name={"description"} id={"description"} />
             </div>
 
-            <div className={"control"}>
-                <label htmlFor={"tag"}>Tag:</label>
-                <input value={tag} onChange={(e) => setTag(e.target.value)} name={"tag"} id={"tag"} />
-            </div>
-
             <div className={"button"}>
-                <button type={"submit"}>Create question</button>
+                <button type="submit">Create question</button>
                 <button onClick={onCancel}>Cancel</button>
             </div>
         </form>

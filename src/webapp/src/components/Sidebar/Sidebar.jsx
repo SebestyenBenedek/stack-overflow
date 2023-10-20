@@ -2,7 +2,7 @@ import React from "react";
 import "./Sidebar.css";
 import Question from "../Question/Question"; // Import your CSS file for custom styles
 
-const Sidebar = ({ tagList }) => {
+/*const Sidebar = ({ tagList }) => {
 
     return (
         <div className="sidebar-content">
@@ -11,7 +11,7 @@ const Sidebar = ({ tagList }) => {
             <div>
                 {tagList.map((tag) => {
                     return (
-                        <span className="tag is-rounded m-1">
+                        <span key={tag.id} className="tag is-rounded m-1">
                             <span className="icon">
                                 <i className="fa-solid fa-hashtag"></i>
                             </span>
@@ -24,4 +24,4 @@ const Sidebar = ({ tagList }) => {
     );
 };
 
-export default Sidebar;
+export default Sidebar;*/
