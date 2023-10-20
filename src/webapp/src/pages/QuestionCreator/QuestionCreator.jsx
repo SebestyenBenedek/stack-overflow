@@ -12,18 +12,16 @@ function QuestionCreator() {
         await fetch('/api/questions/', {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json',
-                token: localStorage.getItem('token'),
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(question),
         });
         setLoading(false);
-        navigate('/api/questions/all');
     };
 
     if (loading) return <Loading />;
 
-    return <QuestionForm onCancel={() => navigate('/api/questions/all')} onSave={handleCreate()} />
+    return <QuestionForm onCancel={() => navigate('/questions/all')} onSave={handleCreate} />
 }
 
 export default QuestionCreator;

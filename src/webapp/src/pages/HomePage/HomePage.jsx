@@ -19,7 +19,7 @@ const HomePage = () => {
                 setQuestions(data);
                 setLoading(false);
             });
-    }, [questions]);
+    }, []);
 
     //console.log(questions);
     if (loading) return <Loading />
