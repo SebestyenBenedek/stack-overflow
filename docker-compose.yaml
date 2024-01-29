@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  react-frontend:
+    build:
+      context: src/webapp
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - spring-backend
+
+  spring-backend:
+    build:
+      context: ./
+      dockerfile: backend.Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    command: ["./entrypoint.sh"]
+
+  db:
+    build:
+      context: src/main/resources
+      dockerfile: database.Dockerfile
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
+    entrypoint: ["docker-entrypoint.sh", "postgres"]
