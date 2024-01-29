@@ -1,6 +1,3 @@
-ALTER USER postgres WITH PASSWORD '123';
-
-
 --
 -- PostgreSQL database dump
 --
@@ -87,8 +84,5 @@ CREATE TABLE answers_users_reference (
 
 CREATE TABLE answers_questions_reference (
     answerId INTEGER,
-    questionId INTEGER
+questionId INTEGER
 );
-
-INSERT INTO users(username, password, email) VALUES ('admin', '123', 'admin@admin.com');
-INSERT INTO questions(title, description, numberOfAnswers, numberOfViews, userId) VALUES ('Where is my phone?', 'I lost my phone a few minutes ago and I can''t find it :(', 2, 41, 1);
