@@ -9,7 +9,6 @@ However, it is currently halfway through its development. The frontend and backe
 
     Installation
     Contribution
-    License
     Authors
 
 # Installation
