@@ -1,0 +1,11 @@
+FROM postgres:latest
+
+ENV POSTGRES_DB ${POSTGRES_DB}
+
+ENV POSTGRES_USER ${POSTGRES_USER}
+
+ENV POSTGRES_PASSWORD ${POSTGRES_PASSWORD}
+
+COPY stack_overflow.sql /docker-entrypoint-initdb.d/
+
+EXPOSE 5433:5432
