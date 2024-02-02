@@ -57,10 +57,6 @@ If you'd like to contribute to the project, please follow these guidelines:
 - Push to your fork: git push origin feature-name.
 - Open a pull request.
 
-# License
-
-It is subject to the license terms in the LICENSE file found in the top-level directory of this distribution and at http://opensource.org/licenses/MIT.
-
 # Authors
 
 List of the contributors to the project:
