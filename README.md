@@ -17,9 +17,12 @@ However, it is currently halfway through its development. The frontend and backe
 Before installing the project, make sure you have Docker installed on your machine. 
 Docker can be downloaded and installed from the official Docker website. Here are the links to download Docker for different operating systems:
 
-    Docker Desktop for Windows 1
-    Docker Desktop for Mac 2
-    Docker Desktop for Linux 3
+Docker Desktop for Windows 1
+
+Docker Desktop for Mac 2
+
+Docker Desktop for Linux 3
+
 
 After downloading and installing Docker, follow these steps to install and run the project:
 
@@ -30,8 +33,9 @@ After downloading and installing Docker, follow these steps to install and run t
 - Make the entrypoint.sh script executable by running the following command:
 
 
+    
     chmod +x entrypoint.sh
-
+    
 
 Run the entrypoint.sh script with three arguments: username, password, and database. Replace <username>, <password>, and <database> with your desired values:
 
