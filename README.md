@@ -29,11 +29,6 @@ Clone the repository to your local machine.
 
 Navigate to the root directory of the project.
 
-Make the entrypoint.sh script executable by running the following command:
-
-
-    chmod +x entrypoint.sh 
-
 Run the entrypoint.sh script with three arguments: username, password, and database. Replace <username>, <password>, and <database> with your desired values:
 
     ./entrypoint.sh <username> <password> <database>
