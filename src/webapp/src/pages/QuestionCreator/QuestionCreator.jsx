@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Loading from "../../components/Loading/Loading";
 import {useNavigate} from "react-router-dom";
 import QuestionForm from "../../components/QuestionForm/QuestionForm";

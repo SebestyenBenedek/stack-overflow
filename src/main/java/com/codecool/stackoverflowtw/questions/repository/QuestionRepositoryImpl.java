@@ -1,7 +1,6 @@
 package com.codecool.stackoverflowtw.questions.repository;
 
 import com.codecool.stackoverflowtw.database.service.ConnectDatabase;
-import com.codecool.stackoverflowtw.database.service.ConnectDatabaseImpl;
 import com.codecool.stackoverflowtw.logger.Logger;
 import com.codecool.stackoverflowtw.questions.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
