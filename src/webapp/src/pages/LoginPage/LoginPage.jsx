@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
 
 const LoginPage = () =>{
     const [formInput, setFormInput] = useState({
@@ -41,6 +40,7 @@ const LoginPage = () =>{
                                        type="text"
                                        placeholder="Username"
                                        onChange={onInputChange}
+                                       required={true}
                                 />
                             </div>
                             <div className="column">
@@ -50,6 +50,7 @@ const LoginPage = () =>{
                                        type="password"
                                        placeholder="Password"
                                        onChange={onInputChange}
+                                       required={true}
                                 />
                             </div>
                             <div className="column">
