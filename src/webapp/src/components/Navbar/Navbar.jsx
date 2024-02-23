@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
 
     const navToggle = () => {
         setIsNavOpen(!isNavOpen);
@@ -17,6 +18,9 @@ const Navbar = () => {
         return isNavOpen ? "navbar-burger is-active" : "navbar-burger";
     }
 
+    useEffect(() => {
+        localStorage.getItem('token') ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    }, [isLoggedIn]);
 
     return (
         <div>
@@ -35,34 +39,46 @@ const Navbar = () => {
 
                 <div id="navbarItems" className={navRender()}>
                     <div className="navbar-start">
-
                         {/*<Link to={'/'} className="navbar-item">
                             Questions
                         </Link>*/}
-
                         <Link to={"/questions/create"} className="navbar-item">
                             Ask a question!
                         </Link>
-
                     </div>
 
                     <div className="navbar-end">
                         <div className="navbar-item">
-                            <div className="buttons">
-                                <Link to={'/registration'}>
+                            {isLoggedIn ?
+                                <div className="buttons">
+                                    <button className="button is-light is-rounded"
+                                        onClick={() => {
+                                            localStorage.removeItem('token')
+                                            setIsLoggedIn(!isLoggedIn);
+                                        }} >
+                                        <span className="icon">
+                                            <i className="fas fa-sign-out-alt"></i>
+                                          </span>
+                                        <span>Logout</span>
+                                    </button>
+                                </div>
+                                :
+                                <div className="buttons">
+                                    <Link to={'/registration'}>
                                     <span className="icon-text button is-primary is-rounded mr-2">
                                       <span className="icon">
                                         <i className="fa-solid fa-user-plus"></i>
                                       </span>
                                       <span>Sign up!</span>
                                     </span>
-                                </Link>
-                                <Link to={'/login'}>
-                                    <button className="button is-light is-rounded">
-                                        Log in
-                                    </button>
-                                </Link>
-                            </div>
+                                    </Link>
+                                    <Link to={'/login'}>
+                                        <button className="button is-light is-rounded">
+                                            Log in
+                                        </button>
+                                    </Link>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
