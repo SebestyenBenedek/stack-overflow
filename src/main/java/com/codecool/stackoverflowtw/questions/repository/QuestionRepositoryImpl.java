@@ -108,7 +108,7 @@ public class QuestionRepositoryImpl implements QuestionRepository {
 
     @Override
     public void add(String title, String description, int numberOfAnswers, int numberOfViews, int userId) {
-        String query = "INSERT INTO questions(title, description, numberOfAnswers, numberOfViews, userId) VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO questions(title, description, createdat, numberOfAnswers, numberOfViews, userId) VALUES(?,?,NOW(),?,?,?)";
 
         try (Connection conn = getConnection()) {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
