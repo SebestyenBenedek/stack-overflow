@@ -47,9 +47,9 @@ const Navbar = () => {
                                 Ask a question!
                             </Link>
                             :
-                            <a className="navbar-item" onClick={() => alert("Log in first!")}>
+                            <Link className="navbar-item" onClick={() => alert("Log in first!")}>
                                 Ask a question!
-                            </a>
+                            </Link>
                         }
                     </div>
 
