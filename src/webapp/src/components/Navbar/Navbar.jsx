@@ -42,9 +42,15 @@ const Navbar = () => {
                         {/*<Link to={'/'} className="navbar-item">
                             Questions
                         </Link>*/}
-                        <Link to={"/questions/create"} className="navbar-item">
-                            Ask a question!
-                        </Link>
+                        {isLoggedIn ?
+                            <Link to={"/questions/create"} className="navbar-item">
+                                Ask a question!
+                            </Link>
+                            :
+                            <Link className="navbar-item" onClick={() => alert("Log in first!")}>
+                                Ask a question!
+                            </Link>
+                        }
                     </div>
 
                     <div className="navbar-end">

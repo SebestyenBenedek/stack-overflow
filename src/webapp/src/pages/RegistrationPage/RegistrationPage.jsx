@@ -38,6 +38,7 @@ const RegistrationPage = () => {
                                        type="email"
                                        placeholder="Email"
                                        onChange={onInputChange}
+                                       required={true}
                                 />
                             </div>
                             <div className="column">
@@ -47,6 +48,7 @@ const RegistrationPage = () => {
                                        type="text"
                                        placeholder="Username"
                                        onChange={onInputChange}
+                                       required={true}
                                 />
                             </div>
                             <div className="column">
@@ -56,6 +58,7 @@ const RegistrationPage = () => {
                                        type="password"
                                        placeholder="Password"
                                        onChange={onInputChange}
+                                       required={true}
                                 />
                             </div>
                             <div className="column">
