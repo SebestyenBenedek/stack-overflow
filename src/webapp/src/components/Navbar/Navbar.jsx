@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import "./Navbar.css"; // Import your CSS file for custom styles
+import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -21,47 +22,46 @@ const Navbar = () => {
         <div>
             <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
-                    <a className="navbar-item" href="/">
+                    <Link className="navbar-item" to="/">
                         <b>What are you looking for?</b>
-                    </a>
+                    </Link>
 
-                    <a role="button" className={burgerRender()} aria-label="menu" aria-expanded="false" data-target="navbarItems" onClick={() => navToggle()}>
+                    <div role="button" className={burgerRender()} aria-label="menu" aria-expanded="false" data-target="navbarItems" onClick={() => navToggle()}>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
-                    </a>
+                    </div>
                 </div>
 
                 <div id="navbarItems" className={navRender()}>
                     <div className="navbar-start">
 
-                        <a className="navbar-item">
+                        {/*<Link to={'/'} className="navbar-item">
                             Questions
-                        </a>
+                        </Link>*/}
 
-                        <a href={"/questions/create"} className="navbar-item">
+                        <Link to={"/questions/create"} className="navbar-item">
                             Ask a question!
-
-                        </a>
+                        </Link>
 
                     </div>
 
                     <div className="navbar-end">
                         <div className="navbar-item">
                             <div className="buttons">
-                                <a>
+                                <Link to={'/registration'}>
                                     <span className="icon-text button is-primary is-rounded mr-2">
                                       <span className="icon">
                                         <i className="fa-solid fa-user-plus"></i>
                                       </span>
                                       <span>Sign up!</span>
                                     </span>
-                                </a>
-                                <a>
+                                </Link>
+                                <Link to={'/login'}>
                                     <button className="button is-light is-rounded">
                                         Log in
                                     </button>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
