@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 import './index.css';
 import HomePage from './pages/HomePage/HomePage';
+import ErrorPage from "./pages/ErrorPage";
 import reportWebVitals from './reportWebVitals';
 import UserPage from "./pages/UserPage/UserPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -14,7 +15,7 @@ import UserQuestionList from "./pages/UserQuestionList/UserQuestionList";
 import UserAnswerList from "./pages/UserAnswerList";
 
 const router = createBrowserRouter(createRoutesFromElements(
-    <Route /*errorElement={<ErrorPage />}*/>
+    <Route errorElement={<ErrorPage />}>
         <Route path={'/'}>
             <Route index element={<HomePage />} />
         </Route>
