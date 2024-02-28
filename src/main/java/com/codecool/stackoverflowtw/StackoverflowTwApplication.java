@@ -22,7 +22,7 @@ public class StackoverflowTwApplication {
 
     @Bean
     ConnectDatabase getDBConnector() {
-        String connectionString = "jdbc:postgresql://db:5432/stackOverflow";
+        String connectionString = "jdbc:postgresql://localhost:5432/stackOverflow";
 
         return new ConnectDatabaseImpl(connectionString, getLogger());
     }
