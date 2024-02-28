@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 import './index.css';
 import HomePage from './pages/HomePage/HomePage';
+import ErrorPage from "./pages/ErrorPage";
 import reportWebVitals from './reportWebVitals';
 import UserPage from "./pages/UserPage/UserPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -13,46 +14,29 @@ import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import UserQuestionList from "./pages/UserQuestionList/UserQuestionList";
 import UserAnswerList from "./pages/UserAnswerList";
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <HomePage/>,
-    },
-    {
-        path: "/user",
-        element: <UserPage />,
-        children: [
-            {
-                path: "questions",
-                element: <UserQuestionList />,
-            }
-            /*{
-                path: "answers",
-                element: <UserAnswerList />,
-            }*/
-        ]
-    },
-    {
-        path: "/registration",
-        element: <RegistrationPage />,
-    },
-    {
-        path: "/login",
-        element: <LoginPage />,
-    },
-    {
-        path: "/questions",
-        element: <QuestionList />,
-    },
-    {
-      path: "/questions/{id}",
-      element: <Question />,
-    },
-    {
-        path: "/questions/create",
-        element: <QuestionCreator />,
-    }
-]);
+const router = createBrowserRouter(createRoutesFromElements(
+    <Route errorElement={<ErrorPage />}>
+        <Route path={'/'}>
+            <Route index element={<HomePage />} />
+        </Route>
+        <Route path={'/login'}>
+            <Route index element={<LoginPage />} />
+        </Route>
+        <Route path={'/registration'}>
+            <Route index element={<RegistrationPage />} />
+        </Route>
+        <Route path={'/user'}>
+            <Route index element={<UserPage />} />
+            <Route path={'questions'} element={<UserQuestionList />} />
+            <Route path={'answers'} element={<UserAnswerList />} />
+        </Route>
+        <Route path={'/questions'}>
+            <Route index element={<QuestionList />}></Route>
+            <Route path={'{id}'} element={<Question />}></Route>
+            <Route path={'create'} element={<QuestionCreator />}></Route>
+        </Route>
+    </Route>
+));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

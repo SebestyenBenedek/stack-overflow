@@ -21,7 +21,7 @@ function QuestionCreator() {
 
     if (loading) return <Loading />;
 
-    return <QuestionForm onCancel={() => navigate('/questions/all')} onSave={handleCreate} />
+    return <QuestionForm onCancel={() => navigate('/')} onSave={handleCreate} />
 }
 
 export default QuestionCreator;
