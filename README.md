@@ -3,13 +3,17 @@
 This project is a full-stack Q&A platform, developed using React for the frontend, Java Spring Boot for the backend,
 and PostgreSQL for the database. The platform allows users to ask and answer questions,
 with features for user authentication and data management.
-However, it is currently halfway through its development. The frontend and backend are not entirely connected yet.
+However, it is currently halfway through its development.
 
 # Table of Contents
-
+    Screenshot
     Installation
     Contribution
     Authors
+
+# Screenshot
+![ScreenShot][product-screenshot]
+<!-- <img src="" width="720" /> -->
 
 # Installation
 
@@ -58,3 +62,5 @@ List of the contributors to the project:
 <a href="https://github.com/SebestyenBenedek/stack-overflow/graphs/contributors">
  <img src="https://contrib.rocks/image?repo=SebestyenBenedek/stack-overflow" />
 </a>
+
+[product-screenshot]: src/main/resources/readme-screenshot.png
